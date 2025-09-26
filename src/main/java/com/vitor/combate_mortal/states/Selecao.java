@@ -11,8 +11,9 @@ public class Selecao implements StateMethods {
 
     GamePanel gp;
     BufferedImage bg;
-    BufferedImage[] players, lutadores;
-    int indexPlayer = 0, estadoPlayer = 0, lutador1 = -1, lutador2= -1, espera = 0;
+    BufferedImage[] players;
+    BufferedImage[][] lutadores;
+    int indexPlayer = 0, estadoPlayer = 0, lutador1 = -1, lutador2= -1, espera = 0, igual = 0;
     boolean terminou = false;
 
     public Selecao(GamePanel gp) {
@@ -35,29 +36,53 @@ public class Selecao implements StateMethods {
         g.drawImage(bg, 0, 0, 1200, 762, null);
 
         if(lutador1 != -1)
-            g.drawImage(lutadores[lutador1], 189, 282, 210, 285, null);
+            g.drawImage(lutadores[lutador1][0], 141, 291, 210, 285, null);
 
         if(lutador2 != -1)
-            g.drawImage(lutadores[lutador2], 801, 282, 210, 285, null);
+            g.drawImage(lutadores[lutador2][igual], 849, 291, 210, 285, null);
 
         if(estadoPlayer <= 1)
-            g.drawImage(players[estadoPlayer], 505, 27+(indexPlayer*177), 192, 177, null);
+            if(indexPlayer < 3)
+                g.drawImage(players[estadoPlayer], 420, 162+((indexPlayer%3)*180), 180, 180, null);
+            else
+                g.drawImage(players[estadoPlayer], 600, 162+((indexPlayer%3)*180), 180, 180, null);
+
     }
 
     public void keyPressed(KeyEvent e) {
 
         if(e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_DOWN) {
-            if(indexPlayer != 3)
+            if(indexPlayer != 2 && indexPlayer != 5)
                 indexPlayer++;
             else
-                indexPlayer = 0;
+                if(indexPlayer == 2)
+                    indexPlayer = 0;
+                else
+                    indexPlayer = 3;
         }
 
         if(e.getKeyCode() == KeyEvent.VK_W || e.getKeyCode() == KeyEvent.VK_UP) {
-            if(indexPlayer != 0)
+            if(indexPlayer != 0 && indexPlayer != 3)
                 indexPlayer--;
             else
-                indexPlayer = 3;
+                if(indexPlayer == 0)
+                    indexPlayer = 2;
+                else
+                    indexPlayer = 5;
+        }
+
+        if(e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_LEFT) {
+            if(indexPlayer < 3)
+                indexPlayer+=3;
+            else
+                indexPlayer-=3;
+        }
+
+        if(e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            if(indexPlayer > 2)
+                indexPlayer-=3;
+            else
+                indexPlayer+=3;
         }
 
         if(e.getKeyCode() == KeyEvent.VK_ENTER && !terminou) {
@@ -65,11 +90,12 @@ public class Selecao implements StateMethods {
                 estadoPlayer++;
                 lutador1 = indexPlayer;
             }else {
-                if(!terminou)
-                    if(lutador1 == indexPlayer) lutador2 = indexPlayer+4;
-                    else lutador2 = indexPlayer;
-                estadoPlayer++;
-                terminou = true;
+                if(!terminou){
+                    if(lutador1 == indexPlayer) igual = 1;
+                    lutador2 = indexPlayer;
+                    estadoPlayer++;
+                    terminou = true;
+                }
             }
         }
     }
@@ -96,22 +122,23 @@ public class Selecao implements StateMethods {
         }
 
         players = new BufferedImage[2];
-        lutadores = new BufferedImage[8];
+        lutadores = new BufferedImage[6][2];
         gp.jogo.nomes = new BufferedImage[4];
 
         for(int i=0; i<4; i++) {
             if(i<2)
-                players[i] = players_atlas.getSubimage(i*128, 0, 64, 59);
+                players[i] = players_atlas.getSubimage(i*60, 0, 60, 60);
             gp.jogo.nomes[i] = nomePlayers_atlas.getSubimage(0, i*10, 72, 10);
         }
-        for(int i=0; i<8; i++)
-            lutadores[i] = lutadores_atlas.getSubimage(i*70, 0, 70, 95);
+        for(int i=0; i<6; i++)
+            for(int j=0; j<2; j++)
+                lutadores[i][j] = lutadores_atlas.getSubimage(i*70, j*95, 70, 95);
     }
 
     public void criarPlayers() {
-        Jogo.p1.selAnimations(lutador1);
+        Jogo.p1.selAnimations(lutador1, igual);
         Jogo.p1.resetPos();
-        Jogo.p2.selAnimations(lutador2);
+        Jogo.p2.selAnimations(lutador2, igual);
         Jogo.p2.resetPos();
     }
 
@@ -121,6 +148,7 @@ public class Selecao implements StateMethods {
         lutador1 = -1;
         lutador2= -1;
         espera = 0;
+        igual = 0;
         terminou = false;
     }
 

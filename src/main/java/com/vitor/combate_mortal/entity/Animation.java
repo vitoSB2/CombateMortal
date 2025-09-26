@@ -24,7 +24,7 @@ public class Animation {
     public void setValores(Player player){
         this.player = player;
         spriteHeight = 155;
-        if(player.personagem == 3 || player.personagem == 7) spriteWidth = 155;
+        if(player.personagem == 3 || player.personagem == 4) spriteWidth = 155;
         else spriteWidth = 176;
         importAtlas();
     }
@@ -172,29 +172,39 @@ public class Animation {
         // IMPORTANDO A IMAGEM
         BufferedImage atlas = null;
         try {
-            if(player.personagem == 0)
-                atlas = ImageIO.read(getClass().getResourceAsStream("/spritesAtlas/raiden_atlas.png"));
-            else if(player.personagem == 1)
-                atlas = ImageIO.read(getClass().getResourceAsStream("/spritesAtlas/subzero_atlas.png"));
-            else if(player.personagem == 2)
-                atlas = ImageIO.read(getClass().getResourceAsStream("/spritesAtlas/scorpion_atlas.png"));
-            else if(player.personagem == 3)
-                atlas = ImageIO.read(getClass().getResourceAsStream("/spritesAtlas/mileena_atlas.png"));
-            else if(player.personagem == 4){
-                atlas = ImageIO.read(getClass().getResourceAsStream("/spritesAtlas/raiden_atlas_alt.png"));
-                player.personagem = 0;
-            } else if(player.personagem == 5){
-                atlas = ImageIO.read(getClass().getResourceAsStream("/spritesAtlas/subzero_atlas_alt.png"));
-                player.personagem = 1;
-            } else if(player.personagem == 6) {
-                atlas = ImageIO.read(getClass().getResourceAsStream("/spritesAtlas/scorpion_atlas_alt.png"));
-                player.personagem = 2;
-            } else if(player.personagem == 7){
-                atlas = ImageIO.read(getClass().getResourceAsStream("/spritesAtlas/mileena_atlas_alt.png"));
-                player.personagem = 3;
+            if (player.igual == 1 && !player.isLeft) {
+                if(player.personagem == 0)
+                    atlas = ImageIO.read(getClass().getResourceAsStream("/spritesAtlas/raiden_atlas_alt.png"));
+                else if(player.personagem == 1)
+                    atlas = ImageIO.read(getClass().getResourceAsStream("/spritesAtlas/subzero_atlas_alt.png"));
+                else if(player.personagem == 2)
+                    atlas = ImageIO.read(getClass().getResourceAsStream("/spritesAtlas/scorpion_atlas_alt.png"));
+                else if(player.personagem == 3)
+                    atlas = ImageIO.read(getClass().getResourceAsStream("/spritesAtlas/mileena_atlas_alt.png"));
+                else if(player.personagem == 4)
+                    atlas = ImageIO.read(getClass().getResourceAsStream("/spritesAtlas/kitana_atlas_alt.png"));
+                else if(player.personagem == 5)
+                    atlas = ImageIO.read(getClass().getResourceAsStream("/spritesAtlas/reptile_atlas_alt.png"));
+            } else {
+                if(player.personagem == 0)
+                    atlas = ImageIO.read(getClass().getResourceAsStream("/spritesAtlas/raiden_atlas.png"));
+                else if(player.personagem == 1)
+                    atlas = ImageIO.read(getClass().getResourceAsStream("/spritesAtlas/subzero_atlas.png"));
+                else if(player.personagem == 2)
+                    atlas = ImageIO.read(getClass().getResourceAsStream("/spritesAtlas/scorpion_atlas.png"));
+                else if(player.personagem == 3)
+                    atlas = ImageIO.read(getClass().getResourceAsStream("/spritesAtlas/mileena_atlas.png"));
+                else if(player.personagem == 4)
+                    atlas = ImageIO.read(getClass().getResourceAsStream("/spritesAtlas/kitana_atlas.png"));
+                else if(player.personagem == 5)
+                    atlas = ImageIO.read(getClass().getResourceAsStream("/spritesAtlas/reptile_atlas.png"));
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        if (atlas == null) {
+            throw new IllegalStateException("Atlas não carregado para personagem: " + player.personagem + " igual: " + player.igual);
         }
 
         // APLICANDO A QUANTIDADE DE SPRITES PARA CADA ANIMAÇÃO DE ACORDO COM O PERSONAGEM

@@ -11,9 +11,10 @@ public class Vitoria implements StateMethods{
 
     private GamePanel gp;
     BufferedImage bg, press_msg;
-    BufferedImage[] lutadores, mensagem;
+    BufferedImage[] mensagem;
+    BufferedImage[][] lutadores;
     boolean pisca = true;
-    int vencedor;
+    int vencedor, igual;
     long lastTime, currentTime;
 
     public Vitoria(GamePanel gp) {
@@ -35,7 +36,7 @@ public class Vitoria implements StateMethods{
         }
 
         BufferedImage lutadores_atlas = null, mensagem_atlas = null;
-        lutadores = new BufferedImage[8];
+        lutadores = new BufferedImage[6][2];
         mensagem = new BufferedImage[4];
 
         try {
@@ -45,8 +46,9 @@ public class Vitoria implements StateMethods{
             e.printStackTrace();
         }
 
-        for(int i=0; i<8; i++) {
-            lutadores[i] = lutadores_atlas.getSubimage(i*70, 0, 70, 95);
+        for(int i=0; i<6; i++) {
+            for(int j = 0; j < 2; j++)
+                lutadores[i][j] = lutadores_atlas.getSubimage(i*70, j*95, 70, 95);
             if(i<4) mensagem[i] = mensagem_atlas.getSubimage(0, i*17, 162, 17);
         }
     }
@@ -65,7 +67,7 @@ public class Vitoria implements StateMethods{
     public void draw(Graphics g) {
         g.drawImage(bg, 0, 0, 1200, 762, null);
 
-        g.drawImage(lutadores[vencedor], 485, 200, 225, 300, null);
+        g.drawImage(lutadores[vencedor][igual], 485, 200, 225, 300, null);
 
         if(vencedor>=4)
             g.drawImage(mensagem[vencedor-4], 357, 54, mensagem[vencedor-4].getWidth()*3, mensagem[vencedor-4].getHeight()*3, gp);
@@ -101,7 +103,7 @@ public class Vitoria implements StateMethods{
 
     }
 
-    public void setVencedor(int vencedor) {
+    public void setVencedor(int vencedor, int igual) {
         this.vencedor = vencedor;
         lastTime = System.currentTimeMillis();
     }

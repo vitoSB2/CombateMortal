@@ -27,7 +27,7 @@ public class Player {
     public Rectangle hurtbox, hitbox;
 
     // INDEX DO PERSONAGEM (0=RAIDEN, 1=SUBZERO, 2=SCORPION, 3=MILEENA)
-    public int personagem = 0;
+    public int personagem = 0, igual = 0;
     public Animation anim;
 
     // VARIAVEIS DE ATAQUE
@@ -53,20 +53,21 @@ public class Player {
         hitbox = new Rectangle();
     }
 
-    public void selAnimations(int personagem) {
+    public void selAnimations(int personagem, int igual) {
         // APLICANDO O TAMANHO DO PERSONAGEM SELECIONADO
-        if(personagem == 3 || personagem == 7)
+        if(personagem == 3 || personagem == 4)
             height = 260;
         else
             height = 270;
 
-        if(personagem == 3 || personagem == 7)
+        if(personagem == 3 || personagem == 4)
             gapAgachado = 30;
         else
             gapAgachado = 0;
 
         width = 100;
         this.personagem = personagem;
+        this.igual = igual;
         vida = 120;
         anim.setValores(this);
 

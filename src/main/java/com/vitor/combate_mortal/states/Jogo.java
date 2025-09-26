@@ -128,12 +128,12 @@ public class Jogo implements StateMethods{
 
             if(endNow - endStart >= 3000) {
                 GameStates.gameState = GameStates.VITORIA;
-                if(vencedor == 1) gp.vitoria.setVencedor(p1.personagem);
+                if(vencedor == 1) gp.vitoria.setVencedor(p1.personagem, 0);
                 else if(vencedor == 2){
                     if(p1.personagem == p2.personagem)
-                        gp.vitoria.setVencedor(p2.personagem+4);
+                        gp.vitoria.setVencedor(p2.personagem, 1);
                     else
-                        gp.vitoria.setVencedor(p2.personagem);
+                        gp.vitoria.setVencedor(p2.personagem, 0);
                 }
             }
         }

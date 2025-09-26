@@ -1,0 +1,213 @@
+package com.vitor.combate_mortal.states;
+
+import com.vitor.combate_mortal.entity.Player1;
+import com.vitor.combate_mortal.entity.Player2;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import com.vitor.combate_mortal.main.GamePanel;
+
+public class Jogo implements StateMethods{
+
+    GamePanel gp;
+    public static Player1 p1;
+    public static Player2 p2;
+    int vencedor;
+    BufferedImage bg;
+    BufferedImage lifeBar;
+    BufferedImage[] nomes;
+
+    // Constantes de dano
+    private static final int DANO_SOCO_FRACO = 10;
+    private static final int DANO_CHUTE_FRACO = 10;
+    private static final int DANO_SOCO_FORTE = 15;
+    private static final int DANO_CHUTE_FORTE = 15;
+    private static final int DANO_ESPECIAL_1 = 20;
+    private static final int DANO_ESPECIAL_2 = 25;
+
+    // INTERVALO PRA PASSAR PRA TELA DE VITÓRIA
+    long endStart, endNow;
+    public boolean ended = false;
+
+    public Jogo(GamePanel gp) {
+        this.gp = gp;
+        setImages();
+        p1 = new Player1(gp, 100);
+        p2 = new Player2(gp, 1000);
+    }
+
+    public void update() {
+        p1.update();
+        p2.update();
+        checkCollisions();
+    }
+
+    private void checkCollisions() {
+        // Verifica colisão P1 atacando P2
+        if (p1.attack && p1.hitbox.intersects(p2.hurtbox) && !p1.hitConnectedThisAttack) {
+            int dano = 0;
+            switch (p1.tipoAtaque) {
+                case 1: // Soco Fraco
+                    dano = DANO_SOCO_FRACO;
+                    break;
+                case 2: // Chute Fraco
+                    dano = DANO_CHUTE_FRACO;
+                    break;
+                case 3: // Soco Forte
+                    dano = DANO_SOCO_FORTE;
+                    break;
+                case 4: // Chute Forte
+                    dano = DANO_CHUTE_FORTE;
+                    break;
+                case 5:
+                    dano = DANO_ESPECIAL_1;
+                    break;
+                case 6:
+                    dano = DANO_ESPECIAL_2;
+                    break;
+            }
+            p2.vida -= dano;
+            p2.initAtacado();
+            if (p2.vida <= 0) {
+                //p2.vida = 0;
+                vencedor = 1;
+                ended = true;
+                p1.ganhou=true;
+            }
+            p1.hitConnectedThisAttack = true;
+        }
+
+        // Verifica colisão P2 atacando P1
+        if (p2.attack && p2.hitbox.intersects(p1.hurtbox) && !p2.hitConnectedThisAttack) {
+            int dano = 0;
+            switch (p2.tipoAtaque) {
+                case 1: // Soco Fraco
+                    dano = DANO_SOCO_FRACO;
+                    break;
+                case 2: // Chute Fraco
+                    dano = DANO_CHUTE_FRACO;
+                    break;
+                case 3: // Soco Forte
+                    dano = DANO_SOCO_FORTE;
+                    break;
+                case 4: // Chute Forte
+                    dano = DANO_CHUTE_FORTE;
+                    break;
+                case 5:
+                    dano = DANO_ESPECIAL_1;
+                    break;
+                case 6:
+                    dano = DANO_ESPECIAL_2;
+                    break;
+            }
+            p1.vida -= dano;
+            p1.initAtacado();
+            if (p1.vida <= 0) {
+                //p1.vida = 0;
+                vencedor = 2;
+                ended = true;
+                p2.ganhou=true;
+            }
+            p2.hitConnectedThisAttack = true;
+        }
+
+        // VERIFICA SE O JOGO ACABOU E DÁ UM INTERVALO PARA ANUNCIAR O VENCEDOR
+        if(ended) {
+            endNow = System.currentTimeMillis();
+
+            if(endStart <= 0) {
+                endStart = System.currentTimeMillis();
+                p1.anim.estado = 0;
+                p1.anim.tick = 0;
+                p2.anim.estado = 0;
+                p2.anim.tick = 0;
+            }
+
+            if(endNow - endStart >= 3000) {
+                GameStates.gameState = GameStates.VITORIA;
+                if(vencedor == 1) gp.vitoria.setVencedor(p1.personagem);
+                else if(vencedor == 2){
+                    if(p1.personagem == p2.personagem)
+                        gp.vitoria.setVencedor(p2.personagem+4);
+                    else
+                        gp.vitoria.setVencedor(p2.personagem);
+                }
+            }
+        }
+    }
+
+
+    public void resetJogo() {
+        ended = false;
+        vencedor = 0;
+        endNow = 0;
+        endStart = 0;
+        p1.ganhou = false;
+        p2.ganhou = false;
+    }
+
+
+    public void draw(Graphics g) {
+        g.drawImage(bg, 0, 0, 1200, 762, gp);
+
+        if(ended)
+            if(vencedor == 1)
+                g.drawImage(gp.vitoria.mensagem[p1.personagem], 357, 200, gp.vitoria.mensagem[p1.personagem].getWidth()*3, gp.vitoria.mensagem[p1.personagem].getHeight()*3, gp);
+            else if(vencedor == 2)
+                g.drawImage(gp.vitoria.mensagem[p2.personagem], 357, 200, gp.vitoria.mensagem[p2.personagem].getWidth()*3, gp.vitoria.mensagem[p2.personagem].getHeight()*3, gp);
+
+        //HUD DE VIDA E NOME DOS LUTADORES
+        g.drawImage(lifeBar, 20, 80, lifeBar.getWidth()*3, lifeBar.getHeight()*3, gp);
+        g.drawImage(lifeBar, gp.getWidth() - lifeBar.getWidth()*3 - 20, 80, lifeBar.getWidth()*3, lifeBar.getHeight()*3, gp);
+
+        g.setColor(new Color(0, 180, 0));
+        g.fillRect(29, 89, (486*p1.vida)/120, lifeBar.getHeight()*3-18);
+        g.fillRect(gp.getWidth() - 29 - (486 * p2.vida) / 120, 89, (486 * p2.vida) / 120, lifeBar.getHeight()*3-18);
+
+        g.drawImage(nomes[p1.personagem], 60, 91, nomes[0].getWidth()*3, nomes[0].getHeight()*3, gp);
+        g.drawImage(nomes[p2.personagem], gp.getWidth() - nomes[0].getTileWidth()*3 - 20, 91, nomes[0].getWidth()*3, nomes[0].getHeight()*3, gp);
+
+        p1.draw(g);
+        p2.draw(g);
+    }
+
+    public void keyPressed(KeyEvent e) {
+        if(ended)return;
+        p1.keyPressed(e);
+        p2.keyPressed(e);
+
+    }
+
+    public void keyReleased(KeyEvent e) {
+        p1.keyReleased(e);
+        p2.keyReleased(e);
+
+    }
+
+    public void keyTyped(KeyEvent e) {
+        if(ended)return;
+        p1.keyTyped(e);
+        p2.keyTyped(e);
+
+    }
+
+    public void setImages() {
+        try {
+            bg = ImageIO.read(getClass().getResourceAsStream("/props/arena_bg.png"));
+            lifeBar = ImageIO.read(getClass().getResourceAsStream("/props/barra_de_vida.png"));
+            nomes = new BufferedImage[4];
+            for (int i = 0; i < nomes.length; i++) {
+                if (nomes[i] == null) {
+                    nomes[i] = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB); // Placeholder
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+}

@@ -12,11 +12,6 @@ import com.vitor.combate_mortal.states.Vitoria;
 
 public class GamePanel extends JPanel implements Runnable{
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
-
     Thread gameThread;
     Inputs inp;
     Frame frame;

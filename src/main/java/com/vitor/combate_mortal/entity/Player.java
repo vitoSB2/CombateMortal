@@ -33,14 +33,14 @@ public class Player {
     // VARIAVEIS DE ATAQUE
     public boolean attack=false, punch=false, punch2=false, kick=false, kick2=false,
             punchPressed=false, kickPressed=false, atacado=false;
-    long attackStart, attackNow, tempoAtaque, atacadoStart, atacadoNow, specialStart,
-            specialNow, specialCooldown = 3000;
+    long attackStart, attackNow, tempoAtaque, atacadoStart, atacadoNow;
     public int tipoAtaque, vida = 120;
     public boolean hitConnectedThisAttack = false;
 
     // VARIÁVEIS DOS ESPECIAIS
     public boolean especial1=false, especial2=false;
     public int xProjetil, yProjetil, widthProjetil, heightProjetil, direcaoInicialEspecial;
+    public long specialStart, specialNow, specialCooldown = 3000;
 
     int gapAgachado;
 
@@ -125,11 +125,9 @@ public class Player {
 
     // INICIA O ATAQUE
     public void initAttack(long tempo, int tipo) {
-        specialNow = System.currentTimeMillis();
 
         if (tipo == 5 && specialNow - specialStart < specialCooldown)
             return;
-
         if (tipo == 6 && specialNow - specialStart < specialCooldown)
             return;
 

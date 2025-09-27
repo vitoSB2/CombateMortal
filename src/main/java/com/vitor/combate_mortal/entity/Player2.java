@@ -17,6 +17,8 @@ public class Player2 extends Player implements PlayerMethods {
 
     // ATUALIZA O JOGADOR
     public void update() {
+        specialNow = System.currentTimeMillis();
+
         // ATUALIZA O LADO DO JOGADOR
         if (x > Jogo.p1.x)
             isLeft = false;

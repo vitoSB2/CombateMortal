@@ -16,7 +16,7 @@ public class Jogo implements StateMethods{
     public static Player1 p1;
     public static Player2 p2;
     int vencedor;
-    BufferedImage bg, lifeBar;
+    BufferedImage bg, lifeBar, specialBar;
     BufferedImage[] nomes_esq, nomes_dir;
 
     // Constantes de dano
@@ -150,8 +150,10 @@ public class Jogo implements StateMethods{
 
 
     public void draw(Graphics g) {
+        // FUNDO DA ARENA DE BATALHA
         g.drawImage(bg, 0, 0, 1200, 762, gp);
 
+        // MENSAGEM DE VITÓRIA
         if(ended)
             if(vencedor == 1)
                 g.drawImage(gp.vitoria.mensagem[p1.personagem], 357, 200, gp.vitoria.mensagem[p1.personagem].getWidth()*3, gp.vitoria.mensagem[p1.personagem].getHeight()*3, gp);
@@ -159,18 +161,42 @@ public class Jogo implements StateMethods{
                 g.drawImage(gp.vitoria.mensagem[p2.personagem], 357, 200, gp.vitoria.mensagem[p2.personagem].getWidth()*3, gp.vitoria.mensagem[p2.personagem].getHeight()*3, gp);
 
         //HUD DE VIDA E NOME DOS LUTADORES
+        // BARRAS DE VIDA
         g.drawImage(lifeBar, 20, 80, lifeBar.getWidth()*3, lifeBar.getHeight()*3, gp);
         g.drawImage(lifeBar, gp.getWidth() - lifeBar.getWidth()*3 - 20, 80, lifeBar.getWidth()*3, lifeBar.getHeight()*3, gp);
-
+        // PARTE VERDE (REPRESENTA A QUANTIDADE DE VIDA
         g.setColor(new Color(0, 180, 0));
         g.fillRect(29, 89, (486*p1.vida)/120, lifeBar.getHeight()*3-18);
         g.fillRect(gp.getWidth() - 29 - (486 * p2.vida) / 120, 89, (486 * p2.vida) / 120, lifeBar.getHeight()*3-18);
 
+        // NOME DOS PERSONAGENS NA BARRA DE VIDA
         g.drawImage(nomes_esq[p1.personagem], 60, 91, nomes_esq[0].getWidth()*3, nomes_esq[0].getHeight()*3, gp);
         g.drawImage(nomes_dir[p2.personagem], gp.getWidth() - nomes_dir[0].getWidth()*3 - 60, 91, nomes_dir[0].getWidth()*3, nomes_dir[0].getHeight()*3, gp);
 
+        // BARRAS DE ESPECIAL
+        g.drawImage(specialBar, 20, 150,  specialBar.getWidth()*3, specialBar.getHeight()*3, gp);
+        g.drawImage(specialBar, gp.getWidth() - specialBar.getWidth()*3 - 20, 150,  specialBar.getWidth()*3, specialBar.getHeight()*3, gp);
+        // PARTE AZUL
+        g.setColor(new Color(0, 0, 180));
+        if((p1.specialNow - p1.specialStart) < p1.specialCooldown){
+            float quantEsp = (float)(p1.specialNow - p1.specialStart) / (float)p1.specialCooldown;
+            g.fillRect(26, 156, (int)(((specialBar.getWidth()*3)-12)*quantEsp), specialBar.getHeight()*3-18);
+        } else
+            g.fillRect(26, 156, ((specialBar.getWidth()*3)-12),  specialBar.getHeight()*3-18);
+
+        if((p2.specialNow - p2.specialStart) < p2.specialCooldown){
+            float quantEsp = (float)(p2.specialNow - p2.specialStart) / (float)p2.specialCooldown;
+            int widthEsp = (int)(((specialBar.getWidth()*3)-12)*quantEsp);
+            g.fillRect((gp.getWidth()-specialBar.getWidth()*3-14)+(((specialBar.getWidth()*3)-12)-widthEsp), 156, widthEsp, specialBar.getHeight()*3-18);
+        } else
+            g.fillRect(gp.getWidth()-specialBar.getWidth()*3-14, 156, (specialBar.getWidth()*3)-12,  specialBar.getHeight()*3-18);
+
+        // OS PERSONAGENS
         p1.draw(g);
         p2.draw(g);
+
+        // DELIMITAÇÃO DA HURTBOX E HITBOX DE CADA PLAYER
+        g.setColor(new Color(0, 180, 0));
         g.drawRect(p1.hurtbox.x, p1.hurtbox.y, p1.hurtbox.width, p1.hurtbox.height);
         g.drawRect(p2.hurtbox.x, p2.hurtbox.y, p2.hurtbox.width, p2.hurtbox.height);
         g.setColor(new Color(180, 0, 0));
@@ -203,6 +229,7 @@ public class Jogo implements StateMethods{
         try {
             bg = ImageIO.read(getClass().getResourceAsStream("/props/arena_bg.png"));
             lifeBar = ImageIO.read(getClass().getResourceAsStream("/props/barra_de_vida.png"));
+            specialBar = ImageIO.read(getClass().getResourceAsStream("/props/barra_de_especial.png"));
             nomes_esq = new BufferedImage[6];
             nomes_dir = new BufferedImage[6];
             for (int i = 0; i < nomes_esq.length; i++) {

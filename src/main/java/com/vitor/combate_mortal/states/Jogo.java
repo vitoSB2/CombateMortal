@@ -16,8 +16,7 @@ public class Jogo implements StateMethods{
     public static Player1 p1;
     public static Player2 p2;
     int vencedor;
-    BufferedImage bg;
-    BufferedImage lifeBar;
+    BufferedImage bg, lifeBar;
     BufferedImage[] nomes;
 
     // Constantes de dano
@@ -172,6 +171,11 @@ public class Jogo implements StateMethods{
 
         p1.draw(g);
         p2.draw(g);
+        g.drawRect(p1.hurtbox.x, p1.hurtbox.y, p1.hurtbox.width, p1.hurtbox.height);
+        g.drawRect(p2.hurtbox.x, p2.hurtbox.y, p2.hurtbox.width, p2.hurtbox.height);
+        g.setColor(new Color(180, 0, 0));
+        g.drawRect(p1.hitbox.x, p1.hitbox.y, p1.hitbox.width, p1.hitbox.height);
+        g.drawRect(p2.hitbox.x, p2.hitbox.y, p2.hitbox.width, p2.hitbox.height);
     }
 
     public void keyPressed(KeyEvent e) {
@@ -191,20 +195,18 @@ public class Jogo implements StateMethods{
         if(ended)return;
         p1.keyTyped(e);
         p2.keyTyped(e);
-
     }
 
     public void setImages() {
         try {
             bg = ImageIO.read(getClass().getResourceAsStream("/props/arena_bg.png"));
             lifeBar = ImageIO.read(getClass().getResourceAsStream("/props/barra_de_vida.png"));
-            nomes = new BufferedImage[4];
+            nomes = new BufferedImage[6];
             for (int i = 0; i < nomes.length; i++) {
                 if (nomes[i] == null) {
                     nomes[i] = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB); // Placeholder
                 }
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -244,6 +244,24 @@ public class Animation {
                 indexEspecial2 = 6;
                 indexVitoria = 12;
                 break;
+            case 4:
+                gapX = 50;
+                gapY = 26;
+                indexParado = 7;
+                indexChute2 = 6;
+                indexEspecial1 = 4;
+                indexEspecial2 = 6;
+                indexVitoria = 11;
+                break;
+            case 5:
+                gapX = 94;
+                gapY = 20;
+                indexParado = 7;
+                indexChute2 = 8;
+                indexEspecial1 = 3;
+                indexEspecial2 = 3;
+                indexVitoria = 4;
+                break;
         }
 
         // APLICANDO A QUANTIDADE GENÉRICA DE SPRITES PARA CADA ANIMAÇÃO (IGUAIS PARA TODOS OS PERSONAGENS)
@@ -256,6 +274,7 @@ public class Animation {
         // CRIANDO O ARRAY DE SPRITES
         int max;
         if(player.personagem == 3) max = 12;
+        else if(player.personagem == 4) max = 11;
         else max = 8;
         sprites = new BufferedImage[24][12];
 
@@ -267,7 +286,7 @@ public class Animation {
 
         // COLOCANDO AS SPRITES QUE VÃO E VOLTAM NO ARRAY
         //PARADO
-        if(player.personagem != 2) {
+        if(player.personagem != 2 && player.personagem != 4 && player.personagem != 5) {
             for(int i=1; i<indexParado-1; i++)
                 sprites[0][indexParado + i-1] = sprites[0][indexParado - i-1];
 
@@ -308,7 +327,7 @@ public class Animation {
         indexChutePulando = 5;
 
         // SOCO FORTE
-        if(player.personagem == 3) {
+        if(player.personagem == 3 || player.personagem == 4) {
             sprites[4][3] = sprites[4][1];
             sprites[4][4] = sprites[4][0];
             indexSoco2 = 5;

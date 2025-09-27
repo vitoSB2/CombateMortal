@@ -37,7 +37,7 @@ public class Vitoria implements StateMethods{
 
         BufferedImage lutadores_atlas = null, mensagem_atlas = null;
         lutadores = new BufferedImage[6][2];
-        mensagem = new BufferedImage[4];
+        mensagem = new BufferedImage[6];
 
         try {
             lutadores_atlas = ImageIO.read(getClass().getResourceAsStream("/selecao/selecao_lutadores.png"));
@@ -49,7 +49,7 @@ public class Vitoria implements StateMethods{
         for(int i=0; i<6; i++) {
             for(int j = 0; j < 2; j++)
                 lutadores[i][j] = lutadores_atlas.getSubimage(i*70, j*95, 70, 95);
-            if(i<4) mensagem[i] = mensagem_atlas.getSubimage(0, i*17, 162, 17);
+            mensagem[i] = mensagem_atlas.getSubimage(0, i*17, 162, 17);
         }
     }
 
@@ -69,10 +69,7 @@ public class Vitoria implements StateMethods{
 
         g.drawImage(lutadores[vencedor][igual], 485, 200, 225, 300, null);
 
-        if(vencedor>=4)
-            g.drawImage(mensagem[vencedor-4], 357, 54, mensagem[vencedor-4].getWidth()*3, mensagem[vencedor-4].getHeight()*3, gp);
-        else
-            g.drawImage(mensagem[vencedor], 357, 54, mensagem[vencedor].getWidth()*3, mensagem[vencedor].getHeight()*3, gp);
+        g.drawImage(mensagem[vencedor], 357, 54, mensagem[vencedor].getWidth()*3, mensagem[vencedor].getHeight()*3, gp);
 
         if(pisca) g.drawImage(press_msg, 396, 609, press_msg.getWidth()*3, press_msg.getHeight()*3, gp);
     }

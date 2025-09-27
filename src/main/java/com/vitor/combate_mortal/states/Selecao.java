@@ -123,9 +123,9 @@ public class Selecao implements StateMethods {
 
         players = new BufferedImage[2];
         lutadores = new BufferedImage[6][2];
-        gp.jogo.nomes = new BufferedImage[4];
+        gp.jogo.nomes = new BufferedImage[6];
 
-        for(int i=0; i<4; i++) {
+        for(int i=0; i<6; i++) {
             if(i<2)
                 players[i] = players_atlas.getSubimage(i*60, 0, 60, 60);
             gp.jogo.nomes[i] = nomePlayers_atlas.getSubimage(0, i*10, 72, 10);

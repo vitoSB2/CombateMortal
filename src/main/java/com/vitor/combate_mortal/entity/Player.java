@@ -61,9 +61,9 @@ public class Player {
             height = 270;
 
         if(personagem == 3 || personagem == 4)
-            gapAgachado = 30;
+            gapAgachado = 40;
         else
-            gapAgachado = 0;
+            gapAgachado = 20;
 
         width = 100;
         this.personagem = personagem;
@@ -305,16 +305,16 @@ public class Player {
             if(agachado) {
                 // RAIDEN
                 if(personagem == 0)
-                    if(isLeft) hitbox.setBounds(x+width, y-38, 90, 40);
-                    else hitbox.setBounds(x-90, y-38, 90, 40);
+                    if(isLeft) hitbox.setBounds(x+width, y-18, 90, 40);
+                    else hitbox.setBounds(x-90, y-18, 90, 40);
                     // MILEENA
                 else if(personagem == 3)
-                    if(isLeft) hitbox.setBounds(x+width, y-28, 52, 36);
-                    else hitbox.setBounds(x-52, y-28, 52, 36);
+                    if(isLeft) hitbox.setBounds(x+width, y+12, 52, 36);
+                    else hitbox.setBounds(x-52, y+12, 52, 36);
                     // SUBZERO E SCORPION
                 else
-                if(isLeft) hitbox.setBounds(x+width, y-32, 94, 36);
-                else hitbox.setBounds(x-94, y-32, 94, 36);
+                if(isLeft) hitbox.setBounds(x+width, y-12, 94, 36);
+                else hitbox.setBounds(x-94, y-12, 94, 36);
 
                 // SOCO PULANDO
             } else if(noAr) {
@@ -338,17 +338,17 @@ public class Player {
                 // RAIDEN
                 if(personagem == 0)
                     if(anim.estado >= 4 || anim.estado <= 6)
-                        if(isLeft) hitbox.setBounds(x+width, y-34, 84, 80);
-                        else hitbox.setBounds(x-84, y-34, 84, 80);
+                        if(isLeft) hitbox.setBounds(x+width, y-14, 84, 80);
+                        else hitbox.setBounds(x-84, y-14, 84, 80);
                     else hitbox.setBounds(0,0,0,0);
                     // MILEENA
                 else if(personagem == 3)
-                    if(isLeft) hitbox.setBounds(x+width, y-6, 100, 40);
-                    else hitbox.setBounds(x-100, y-6, 100, 40);
+                    if(isLeft) hitbox.setBounds(x+width, y+34, 100, 40);
+                    else hitbox.setBounds(x-100, y+34, 100, 40);
                     // SUBZERO E SCORPION
                 else
-                if(isLeft) hitbox.setBounds(x+width, y-46, 76, 110);
-                else hitbox.setBounds(x-76, y-46, 76, 110);
+                if(isLeft) hitbox.setBounds(x+width, y-26, 76, 110);
+                else hitbox.setBounds(x-76, y-26, 76, 110);
 
                 // CHUTE PULANDO
             } else if(noAr) {

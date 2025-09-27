@@ -137,7 +137,7 @@ public class Animation {
         if(player.personagem == 0){
             if(player.especial1) estadoMaxAsset = indexAsset2;
             if(player.especial2) estadoMaxAsset = indexAsset3;
-        } else if (player.personagem == 1 || player.personagem == 3)
+        } else if (player.personagem == 1 || player.personagem > 2)
             if(player.especial1) estadoMaxAsset = indexAsset1;
 
         if(!player.isLeft) velAssets = velAssets-1;
@@ -150,7 +150,7 @@ public class Animation {
                     if(player.especial2) estadoAsset = indexAsset3-1;
                 } else if (player.personagem == 1){
                     if(player.especial1) estadoAsset = indexAsset1-2;
-                } else if (player.personagem == 3){
+                } else if (player.personagem == 3 || player.personagem == 4){
                     if(player.especial1) estadoAsset = indexAsset1-3;
                 }
 
@@ -161,7 +161,7 @@ public class Animation {
         if(player.personagem == 0){
             if(player.especial1) return assets[1][estadoAsset];
             if(player.especial2) return assets[2][estadoAsset];
-        } else if (player.personagem == 1 || player.personagem == 3)
+        } else if (player.personagem == 1 || player.personagem > 2)
             if(player.especial1) return assets[0][estadoAsset];
 
         return assets[0][0];
@@ -362,8 +362,10 @@ public class Animation {
                 atlas = ImageIO.read(getClass().getResourceAsStream("/spritesAtlas/raiden_raios.png"));
             else if(player.personagem == 1)
                 atlas = ImageIO.read(getClass().getResourceAsStream("/spritesAtlas/subzero_gelo.png"));
-            else if(player.personagem == 3)
+            else if(player.personagem == 3 || player.personagem == 4)
                 atlas = ImageIO.read(getClass().getResourceAsStream("/spritesAtlas/mileena_facas.png"));
+            else if(player.personagem == 5)
+                atlas = ImageIO.read(getClass().getResourceAsStream("/spritesAtlas/reptile_cuspe.png"));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -391,11 +393,16 @@ public class Animation {
             for(int i=0; i<12; i++)
                 assets[0][i] = atlas.getSubimage(i*212, 0, 212, 86);
             indexAsset1 = 7;
-        } else if(player.personagem == 3){
+        } else if(player.personagem == 3 || player.personagem == 4){
             assets = new BufferedImage[1][5];
             for(int i=0; i<5; i++)
                 assets[0][i] = atlas.getSubimage(i*118, 0, 118, 106);
             indexAsset1 = 5;
+        } else if(player.personagem == 5){
+            assets = new BufferedImage[1][13];
+            for(int i=0; i<13; i++)
+                assets[0][i] = atlas.getSubimage(i*110, 0, 110, 64);
+            indexAsset1 = 13;
         }
 
     }

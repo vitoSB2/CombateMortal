@@ -111,10 +111,11 @@ public class Selecao implements StateMethods {
     // IMPORTANDO AS IMAGENS E COLOCANDO ELAS EM BUFFERED IMAGES
     public void setImages() {
 
-        BufferedImage lutadores_atlas = null, players_atlas = null, nomePlayers_atlas = null;
+        BufferedImage lutadores_atlas = null, players_atlas = null, nomePlayers_esq = null, nomePlayers_dir=null;
         try {
             bg = ImageIO.read(getClass().getResourceAsStream("/selecao/selecao_tela.png"));
-            nomePlayers_atlas = ImageIO.read(getClass().getResourceAsStream("/props/nome_barra_de_vida.png"));
+            nomePlayers_esq = ImageIO.read(getClass().getResourceAsStream("/props/nome_barra_de_vida_esq.png"));
+            nomePlayers_dir = ImageIO.read(getClass().getResourceAsStream("/props/nome_barra_de_vida_dir.png"));
             players_atlas = ImageIO.read(getClass().getResourceAsStream("/selecao/selecao_players.png"));
             lutadores_atlas = ImageIO.read(getClass().getResourceAsStream("/selecao/selecao_lutadores.png"));
         } catch (IOException e) {
@@ -123,12 +124,13 @@ public class Selecao implements StateMethods {
 
         players = new BufferedImage[2];
         lutadores = new BufferedImage[6][2];
-        gp.jogo.nomes = new BufferedImage[6];
+        gp.jogo.nomes_esq = new BufferedImage[6];
 
         for(int i=0; i<6; i++) {
             if(i<2)
                 players[i] = players_atlas.getSubimage(i*60, 0, 60, 60);
-            gp.jogo.nomes[i] = nomePlayers_atlas.getSubimage(0, i*10, 72, 10);
+            gp.jogo.nomes_esq[i] = nomePlayers_esq.getSubimage(0, i*10, 72, 10);
+            gp.jogo.nomes_dir[i] = nomePlayers_dir.getSubimage(0, i*10, 72, 10);
         }
         for(int i=0; i<6; i++)
             for(int j=0; j<2; j++)

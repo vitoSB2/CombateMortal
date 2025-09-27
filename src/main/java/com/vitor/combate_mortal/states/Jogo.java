@@ -17,7 +17,7 @@ public class Jogo implements StateMethods{
     public static Player2 p2;
     int vencedor;
     BufferedImage bg, lifeBar;
-    BufferedImage[] nomes;
+    BufferedImage[] nomes_esq, nomes_dir;
 
     // Constantes de dano
     private static final int DANO_SOCO_FRACO = 10;
@@ -166,16 +166,18 @@ public class Jogo implements StateMethods{
         g.fillRect(29, 89, (486*p1.vida)/120, lifeBar.getHeight()*3-18);
         g.fillRect(gp.getWidth() - 29 - (486 * p2.vida) / 120, 89, (486 * p2.vida) / 120, lifeBar.getHeight()*3-18);
 
-        g.drawImage(nomes[p1.personagem], 60, 91, nomes[0].getWidth()*3, nomes[0].getHeight()*3, gp);
-        g.drawImage(nomes[p2.personagem], gp.getWidth() - nomes[0].getTileWidth()*3 - 20, 91, nomes[0].getWidth()*3, nomes[0].getHeight()*3, gp);
+        g.drawImage(nomes_esq[p1.personagem], 60, 91, nomes_esq[0].getWidth()*3, nomes_esq[0].getHeight()*3, gp);
+        g.drawImage(nomes_dir[p2.personagem], gp.getWidth() - nomes_dir[0].getWidth()*3 - 60, 91, nomes_dir[0].getWidth()*3, nomes_dir[0].getHeight()*3, gp);
 
         p1.draw(g);
         p2.draw(g);
         g.drawRect(p1.hurtbox.x, p1.hurtbox.y, p1.hurtbox.width, p1.hurtbox.height);
         g.drawRect(p2.hurtbox.x, p2.hurtbox.y, p2.hurtbox.width, p2.hurtbox.height);
         g.setColor(new Color(180, 0, 0));
-        g.drawRect(p1.hitbox.x, p1.hitbox.y, p1.hitbox.width, p1.hitbox.height);
-        g.drawRect(p2.hitbox.x, p2.hitbox.y, p2.hitbox.width, p2.hitbox.height);
+        if (p1.attack)
+            g.drawRect(p1.hitbox.x, p1.hitbox.y, p1.hitbox.width, p1.hitbox.height);
+        if (p2.attack)
+            g.drawRect(p2.hitbox.x, p2.hitbox.y, p2.hitbox.width, p2.hitbox.height);
     }
 
     public void keyPressed(KeyEvent e) {
@@ -201,11 +203,13 @@ public class Jogo implements StateMethods{
         try {
             bg = ImageIO.read(getClass().getResourceAsStream("/props/arena_bg.png"));
             lifeBar = ImageIO.read(getClass().getResourceAsStream("/props/barra_de_vida.png"));
-            nomes = new BufferedImage[6];
-            for (int i = 0; i < nomes.length; i++) {
-                if (nomes[i] == null) {
-                    nomes[i] = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB); // Placeholder
-                }
+            nomes_esq = new BufferedImage[6];
+            nomes_dir = new BufferedImage[6];
+            for (int i = 0; i < nomes_esq.length; i++) {
+                if(nomes_esq[i] == null)
+                    nomes_esq[i] = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+                if(nomes_dir[i] == null)
+                    nomes_dir[i] = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
             }
         } catch (IOException e) {
             e.printStackTrace();

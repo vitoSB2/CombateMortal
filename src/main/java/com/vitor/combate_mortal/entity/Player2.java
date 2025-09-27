@@ -293,7 +293,9 @@ public class Player2 extends Player implements PlayerMethods {
                     initAttack(500, 5);
                 else if(personagem == 2)
                     initAttack(600, 5);
-                else if(personagem == 3)
+                else if(personagem == 3 || personagem == 4)
+                    initAttack(1000, 5);
+                else if(personagem == 5)
                     initAttack(1000, 5);
             }
         }

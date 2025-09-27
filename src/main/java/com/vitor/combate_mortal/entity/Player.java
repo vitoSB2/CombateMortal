@@ -26,7 +26,7 @@ public class Player {
     // REPRESENTA A PARTE TANGIVEL DO PLAYER
     public Rectangle hurtbox, hitbox;
 
-    // INDEX DO PERSONAGEM (0=RAIDEN, 1=SUBZERO, 2=SCORPION, 3=MILEENA)
+    // INDEX DO PERSONAGEM (0=RAIDEN, 1=SUBZERO, 2=SCORPION, 3=MILEENA, 4=KITANA, 5=REPTILE)
     public int personagem = 0, igual = 0;
     public Animation anim;
 
@@ -95,7 +95,7 @@ public class Player {
             attackNow = System.currentTimeMillis();
             if(personagem != 2)
                 if(especial1) updateProjetil();
-            if(personagem == 1 || personagem == 2)
+            if(personagem == 1 || personagem == 2 || personagem == 5)
                 if(especial2) avancar();
             if(personagem == 2)
                 if(especial1) avancar();
@@ -125,16 +125,13 @@ public class Player {
 
     // INICIA O ATAQUE
     public void initAttack(long tempo, int tipo) {
-
         specialNow = System.currentTimeMillis();
 
-        if (tipo == 5 && specialNow - specialStart < specialCooldown) {
+        if (tipo == 5 && specialNow - specialStart < specialCooldown)
             return;
-        }
 
-        if (tipo == 6 && specialNow - specialStart < specialCooldown) {
+        if (tipo == 6 && specialNow - specialStart < specialCooldown)
             return;
-        }
 
         attack = true;
         anim.estado = 0;
@@ -174,7 +171,7 @@ public class Player {
                 anim.gapYProjetil = 54;
                 anim.velAssets = 10;
 
-            }else if(personagem == 3){
+            }else if(personagem == 3 || personagem == 4){
                 if(isLeft)
                     xProjetil = x-50+width;
                 else xProjetil = x-50-212;
@@ -184,6 +181,17 @@ public class Player {
                 anim.gapXProjetil = 24;
                 anim.gapYProjetil = 80;
                 anim.velAssets = 12;
+
+            }else if(personagem == 5){
+                if(isLeft)
+                    xProjetil = x+(96);
+                else xProjetil = x+width-(96);
+                yProjetil = y+(31);
+                widthProjetil = 106*2;
+                heightProjetil = 7*3;
+                anim.gapXProjetil = 9;
+                anim.gapYProjetil = 28*2;
+                anim.velAssets = 16;
             }
             specialStart = System.currentTimeMillis();
         } else if(tipo == 6){
@@ -229,14 +237,14 @@ public class Player {
                 if(personagem == 0)
                     if(isLeft) hitbox.setBounds(x+width, y+12, 94, 44);
                     else hitbox.setBounds(x-94, y+12, 94, 44);
-                    // MILEENA
-                else if(personagem == 3)
+                    // MILEENA E KITANA
+                else if(personagem == 3 || personagem == 4)
                     if(isLeft) hitbox.setBounds(x+width, y+52, 100, 38);
                     else hitbox.setBounds(x-100, y+52, 100, 38);
-                    // SUBZERO E SCORPION
+                    // SUBZERO, SCORPION E REPTILE
                 else
-                if(isLeft) hitbox.setBounds(x+width, y+12, 92, 46);
-                else hitbox.setBounds(x-92, y+12, 92, 46);
+                    if(isLeft) hitbox.setBounds(x+width, y+12, 92, 46);
+                    else hitbox.setBounds(x-92, y+12, 92, 46);
             }
             // CHUTE FRACO
         } else if (tipoAtaque == 2) {
@@ -245,14 +253,14 @@ public class Player {
                 if(personagem == 0)
                     if(isLeft) hitbox.setBounds(x+width, y+72, 86, 40);
                     else hitbox.setBounds(x-86, y+72, 86, 40);
-                    // MILEENA
-                else if(personagem == 3)
+                    // MILEENA E KITANA
+                else if(personagem == 3 || personagem == 4)
                     if(isLeft) hitbox.setBounds(x+width, y+76, 56, 30);
                     else hitbox.setBounds(x-56, y+76, 56, 30);
-                    // SUBZERO E SCORPION
+                    // SUBZERO, SCORPION E REPTILE
                 else
-                if(isLeft) hitbox.setBounds(x+width, y+70, 90, 36);
-                else hitbox.setBounds(x-90, y+70, 90, 36);
+                    if(isLeft) hitbox.setBounds(x+width, y+70, 90, 36);
+                    else hitbox.setBounds(x-90, y+70, 90, 36);
             }
             // SOCO FORTE
         } else if (tipoAtaque == 3) {
@@ -263,16 +271,16 @@ public class Player {
                         if(isLeft) hitbox.setBounds(x+width, y+24, 86, 48);
                         else hitbox.setBounds(x-86, y+24, 86, 48);
                     else
-                    if(isLeft) hitbox.setBounds(x+width, y-14, 52, 90);
-                    else hitbox.setBounds(x-52, y-14, 52, 90);
-                    // MILEENA
-                else if(personagem == 3)
+                        if(isLeft) hitbox.setBounds(x+width, y-14, 52, 90);
+                        else hitbox.setBounds(x-52, y-14, 52, 90);
+                    // MILEENA E KITANA
+                else if(personagem == 3 || personagem == 4)
                     if(isLeft) hitbox.setBounds(x+width, y+10, 50, 46);
                     else hitbox.setBounds(x-50, y+10, 50, 46);
-                    // SUBZERO E SCORPION
+                    // SUBZERO, SCORPION E REPTILE
                 else
-                if(isLeft) hitbox.setBounds(x+width, y-16, 40, 110);
-                else hitbox.setBounds(x-40, y-16, 40, 110);
+                    if(isLeft) hitbox.setBounds(x+width, y-16, 40, 110);
+                    else hitbox.setBounds(x-40, y-16, 40, 110);
             }
             // CHUTE FORTE
         } else if (tipoAtaque == 4) {
@@ -283,18 +291,18 @@ public class Player {
                         if(isLeft) hitbox.setBounds(x+width, y+104, 50, 54);
                         else hitbox.setBounds(x-50, y+104, 50, 54);
                     else
-                    if(isLeft) hitbox.setBounds(x+width, y-8, 80, 96);
-                    else hitbox.setBounds(x-80, y-8, 80, 96);
-                    // MILEENA
-                else if(personagem == 3)
+                        if(isLeft) hitbox.setBounds(x+width, y-8, 80, 96);
+                        else hitbox.setBounds(x-80, y-8, 80, 96);
+                    // MILEENA E KITANA
+                else if(personagem == 3 || personagem == 4)
                     if(anim.estado >= 2 || anim.estado <= 4)
                         if(isLeft) hitbox.setBounds(x+width+40, y-10, 80, 70);
                         else hitbox.setBounds(x-80-40, y-10, 80, 70);
                     else hitbox.setBounds(0,0,0,0);
-                    // SUBZERO E SCORPION
+                    // SUBZERO, SCORPION E REPTILE
                 else
-                if(isLeft) hitbox.setBounds(x+width, y+14, 46, 104);
-                else hitbox.setBounds(x-46, y+14, 46, 104);
+                    if(isLeft) hitbox.setBounds(x+width, y+14, 46, 104);
+                    else hitbox.setBounds(x-46, y+14, 46, 104);
             }
         }
 
@@ -307,14 +315,14 @@ public class Player {
                 if(personagem == 0)
                     if(isLeft) hitbox.setBounds(x+width, y-18, 90, 40);
                     else hitbox.setBounds(x-90, y-18, 90, 40);
-                    // MILEENA
-                else if(personagem == 3)
+                    // MILEENA E KITANA
+                else if(personagem == 3 || personagem == 4)
                     if(isLeft) hitbox.setBounds(x+width, y+12, 52, 36);
                     else hitbox.setBounds(x-52, y+12, 52, 36);
-                    // SUBZERO E SCORPION
+                    // SUBZERO, SCORPION E REPTILE
                 else
-                if(isLeft) hitbox.setBounds(x+width, y-12, 94, 36);
-                else hitbox.setBounds(x-94, y-12, 94, 36);
+                    if(isLeft) hitbox.setBounds(x+width, y-12, 94, 36);
+                    else hitbox.setBounds(x-94, y-12, 94, 36);
 
                 // SOCO PULANDO
             } else if(noAr) {
@@ -322,14 +330,14 @@ public class Player {
                 if(personagem == 0)
                     if(isLeft) hitbox.setBounds(x+width, y+28, 136, 44);
                     else hitbox.setBounds(x-136, y+28, 136, 44);
-                    // MILEENA
-                else if(personagem == 3)
+                    // MILEENA E KITANA
+                else if(personagem == 3 || personagem == 4)
                     if(isLeft) hitbox.setBounds(x+width+60, y+64, 90, 40);
                     else hitbox.setBounds(x-90-60, y+64, 90, 40);
-                    // SUBZERO E SCORPION
+                    // SUBZERO, SCORPION E REPTILE
                 else
-                if(isLeft) hitbox.setBounds(x+width, y+3, 100, 56);
-                else hitbox.setBounds(x-100, y+3, 100, 56);
+                    if(isLeft) hitbox.setBounds(x+width, y+3, 100, 56);
+                    else hitbox.setBounds(x-100, y+3, 100, 56);
             }
             // CHUTE
         } else if (tipoAtaque == 2 || tipoAtaque == 4) {
@@ -341,14 +349,14 @@ public class Player {
                         if(isLeft) hitbox.setBounds(x+width, y-14, 84, 80);
                         else hitbox.setBounds(x-84, y-14, 84, 80);
                     else hitbox.setBounds(0,0,0,0);
-                    // MILEENA
-                else if(personagem == 3)
+                    // MILEENA E KITANA
+                else if(personagem == 3 || personagem == 4)
                     if(isLeft) hitbox.setBounds(x+width, y+34, 100, 40);
                     else hitbox.setBounds(x-100, y+34, 100, 40);
-                    // SUBZERO E SCORPION
+                    // SUBZERO, SCORPION E REPTILE
                 else
-                if(isLeft) hitbox.setBounds(x+width, y-26, 76, 110);
-                else hitbox.setBounds(x-76, y-26, 76, 110);
+                    if(isLeft) hitbox.setBounds(x+width, y-26, 76, 110);
+                    else hitbox.setBounds(x-76, y-26, 76, 110);
 
                 // CHUTE PULANDO
             } else if(noAr) {
@@ -356,32 +364,33 @@ public class Player {
                 if(personagem == 0)
                     if(isLeft) hitbox.setBounds(x+width, y+80, 68, 50);
                     else hitbox.setBounds(x-68, y+80, 68, 50);
-                    // MILEENA
-                else if(personagem == 3)
+                    // MILEENA E KITANA
+                else if(personagem == 3 || personagem == 4)
                     if(isLeft) hitbox.setBounds(x+width+26, y+80, 80, 52);
                     else hitbox.setBounds(x-80-26, y+80, 80, 52);
-                    // SUBZERO E SCORPION
+                    // SUBZERO, SCORPION E REPTILE
                 else
-                if(isLeft) hitbox.setBounds(x+width, y+64, 66, 50);
-                else hitbox.setBounds(x-66, y+64, 66, 50);
+                    if(isLeft) hitbox.setBounds(x+width, y+64, 66, 50);
+                    else hitbox.setBounds(x-66, y+64, 66, 50);
             }
         }
 
         // ESPECIAIS 1 E 2
-        if(especial1){
+        if(especial1) {
             if(personagem != 2)
                 hitbox.setBounds(xProjetil, yProjetil, widthProjetil, heightProjetil);
             else
-            if(isLeft) hitbox.setBounds(x+width, y+202, 86, 82);
-            else hitbox.setBounds(x-86, y+202, 86, 82);
-        } else if (especial2){
+                if(isLeft) hitbox.setBounds(x+width, y+202, 86, 82);
+                else hitbox.setBounds(x-86, y+202, 86, 82);
+
+        } else if (especial2) {
             if(personagem == 0)
                 if(isLeft) hitbox.setBounds(x+width, y-40, 200, 230);
                 else hitbox.setBounds(x-200, y-40, 200, 230);
-            else if(personagem == 1 || personagem == 2)
+            else if(personagem == 1 || personagem == 2 || personagem == 5)
                 if(isLeft) hitbox.setBounds(x+width, y+208, 88, 60);
                 else hitbox.setBounds(x-88, y+208, 88, 60);
-            else if(personagem == 3)
+            else if(personagem == 3  || personagem == 4)
                 if(isLeft) hitbox.setBounds(x+width, y+38, 142, 48);
                 else hitbox.setBounds(x-142, y+38, 142, 48);
         }

@@ -87,7 +87,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void paintComponent(Graphics g) {
-        //É CHAMADA SEMPRE QUE O MÉTODO REPAINT É CHAMADO
+        //É CHAMADA SEMPRE QUE O MÉT.ODO REPAINT É CHAMADO
 
         switch (GameStates.gameState) {
             case SELECAO:

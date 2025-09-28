@@ -183,7 +183,7 @@ public class Player {
             }else if(personagem == 5){
                 if(isLeft)
                     xProjetil = x+(96);
-                else xProjetil = x+width-(96);
+                else xProjetil = x-(96);
                 yProjetil = y+(31);
                 widthProjetil = 106*2;
                 heightProjetil = 7*3;

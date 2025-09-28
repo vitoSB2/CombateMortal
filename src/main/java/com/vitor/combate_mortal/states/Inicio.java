@@ -5,7 +5,10 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.Clip;
+
 import com.vitor.combate_mortal.main.GamePanel;
+import com.vitor.combate_mortal.main.Util;
 
 public class Inicio implements StateMethods{
 
@@ -13,9 +16,14 @@ public class Inicio implements StateMethods{
     BufferedImage bg, press_msg;
     boolean pisca = true;
     long lastTime, currentTime;
+    Clip musicaTema;
+
     public Inicio(GamePanel gp){
         this.gp = gp;
         setImages();
+
+        // COMEÇA A MÚSICA DO INÍCIO
+        musicaTema = Util.play("tema");
     }
 
     public void setImages() {
@@ -46,6 +54,8 @@ public class Inicio implements StateMethods{
     @Override
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+            musicaTema.stop();
+            System.out.println("tentou parar");
             GameStates.gameState = GameStates.SELECAO;
         }
     }

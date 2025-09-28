@@ -146,14 +146,12 @@ public class Animation {
             estadoAsset++;
             if(estadoAsset >= estadoMaxAsset){
                 if(player.personagem == 0){
-                    if(player.especial1) estadoAsset = indexAsset2-3;
-                    if(player.especial2) estadoAsset = indexAsset3-1;
-                } else if (player.personagem == 1){
-                    if(player.especial1) estadoAsset = indexAsset1-2;
-                } else if (player.personagem == 3 || player.personagem == 4){
-                    if(player.especial1) estadoAsset = indexAsset1-3;
-                }
-
+                    estadoAsset = indexAsset2-3;
+                    estadoAsset = indexAsset3-1;
+                } else if (player.personagem == 1)
+                    estadoAsset = indexAsset1-2;
+                else if (player.personagem > 2)
+                    estadoAsset = indexAsset1-3;
             }
             tickAsset = 0;
         }
@@ -402,7 +400,7 @@ public class Animation {
             assets = new BufferedImage[1][13];
             for(int i=0; i<13; i++)
                 assets[0][i] = atlas.getSubimage(i*110, 0, 110, 64);
-            indexAsset1 = 13;
+            indexAsset1 = 9;
         }
 
     }

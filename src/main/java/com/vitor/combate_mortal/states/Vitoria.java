@@ -102,6 +102,7 @@ public class Vitoria implements StateMethods{
 
     public void setVencedor(int vencedor, int igual) {
         this.vencedor = vencedor;
+        this.igual = igual;
         lastTime = System.currentTimeMillis();
     }
 

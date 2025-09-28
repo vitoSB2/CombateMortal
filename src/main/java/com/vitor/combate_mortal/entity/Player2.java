@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import com.vitor.combate_mortal.main.GamePanel;
+import com.vitor.combate_mortal.main.Util;
 import com.vitor.combate_mortal.states.Jogo;
 
 public class Player2 extends Player implements PlayerMethods {
@@ -215,6 +216,10 @@ public class Player2 extends Player implements PlayerMethods {
 
     // INPUTS
     public void keyPressed(KeyEvent e) {
+        if ((e.getKeyCode() == KeyEvent.VK_NUMPAD4 || e.getKeyCode() == KeyEvent.VK_NUMPAD5 ||
+                e.getKeyCode() == KeyEvent.VK_NUMPAD1 || e.getKeyCode() == KeyEvent.VK_NUMPAD2)
+                && !atacado && !attack)
+            Util.play("ataque");
 
         // INPUTS DE MOVIMENTAÇÃO
         if (e.getKeyCode() == KeyEvent.VK_UP) {

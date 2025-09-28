@@ -8,7 +8,10 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.Clip;
+
 import com.vitor.combate_mortal.main.GamePanel;
+import com.vitor.combate_mortal.main.Util;
 
 public class Jogo implements StateMethods{
 
@@ -31,6 +34,9 @@ public class Jogo implements StateMethods{
     long endStart, endNow;
     public boolean ended = false;
 
+    boolean musica = false;
+    Clip musicaArena;
+
     public Jogo(GamePanel gp) {
         this.gp = gp;
         setImages();
@@ -39,6 +45,10 @@ public class Jogo implements StateMethods{
     }
 
     public void update() {
+        if(!musica){
+            musica = true;
+            musicaArena = Util.play("batalha");
+        }
         p1.update();
         p2.update();
         checkCollisions();
@@ -77,6 +87,7 @@ public class Jogo implements StateMethods{
                 p1.ganhou=true;
             }
             p1.hitConnectedThisAttack = true;
+            Util.play("acerto");
         }
 
         // Verifica colisão P2 atacando P1
@@ -111,6 +122,7 @@ public class Jogo implements StateMethods{
                 p2.ganhou=true;
             }
             p2.hitConnectedThisAttack = true;
+            Util.play("acerto");
         }
 
         // VERIFICA SE O JOGO ACABOU E DÁ UM INTERVALO PARA ANUNCIAR O VENCEDOR
@@ -126,6 +138,7 @@ public class Jogo implements StateMethods{
             }
 
             if(endNow - endStart >= 3000) {
+                musicaArena.stop();
                 GameStates.gameState = GameStates.VITORIA;
                 if(vencedor == 1) gp.vitoria.setVencedor(p1.personagem, 0);
                 else if(vencedor == 2){
@@ -140,6 +153,7 @@ public class Jogo implements StateMethods{
 
 
     public void resetJogo() {
+        musica = false;
         ended = false;
         vencedor = 0;
         endNow = 0;

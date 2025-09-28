@@ -5,7 +5,10 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.Clip;
+
 import com.vitor.combate_mortal.main.GamePanel;
+import com.vitor.combate_mortal.main.Util;
 
 public class Vitoria implements StateMethods{
 
@@ -13,9 +16,10 @@ public class Vitoria implements StateMethods{
     BufferedImage bg, press_msg;
     BufferedImage[] mensagem;
     BufferedImage[][] lutadores;
-    boolean pisca = true;
+    boolean pisca = true, musica = false;
     int vencedor, igual;
     long lastTime, currentTime;
+    Clip musicaVitoria;
 
     public Vitoria(GamePanel gp) {
         this.gp = gp;
@@ -55,6 +59,11 @@ public class Vitoria implements StateMethods{
 
     @Override
     public void update() {
+        if(!musica) {
+            musicaVitoria = Util.play("selecao_musica");
+            musica = true;
+        }
+
         currentTime = System.currentTimeMillis();
         if(currentTime - lastTime >= 500){
             if(pisca)pisca = false;
@@ -77,6 +86,14 @@ public class Vitoria implements StateMethods{
     private void resetGame() {
         gp.jogo.resetJogo();
         gp.selecao.resetSelecao();
+
+        if(musicaVitoria != null){
+            musicaVitoria.stop();
+            musica = false;
+        } else {
+            Inicio.musicaTema.stop();
+        }
+        Util.play("fim_da_selecao");
         GameStates.gameState = GameStates.SELECAO;
     }
 
@@ -84,7 +101,6 @@ public class Vitoria implements StateMethods{
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_ENTER) {
             resetGame();
-            //A IDEIA É RESETAR TODOS OS VALORES, COMO POSIÇÃO DOS JOGADORES, VIDA, VARIÁVEIS DO ESTADO SELECÃO, ETC.
         }
     }
 

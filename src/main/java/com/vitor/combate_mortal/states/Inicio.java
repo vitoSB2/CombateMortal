@@ -16,7 +16,7 @@ public class Inicio implements StateMethods{
     BufferedImage bg, press_msg;
     boolean pisca = true;
     long lastTime, currentTime;
-    Clip musicaTema;
+    public static Clip musicaTema;
 
     public Inicio(GamePanel gp){
         this.gp = gp;
@@ -54,20 +54,18 @@ public class Inicio implements StateMethods{
     @Override
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-            musicaTema.stop();
-            System.out.println("tentou parar");
             GameStates.gameState = GameStates.SELECAO;
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet.");
+
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet.");
+
     }
 
 }

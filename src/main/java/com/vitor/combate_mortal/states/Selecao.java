@@ -5,16 +5,20 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.Clip;
+
 import com.vitor.combate_mortal.main.GamePanel;
+import com.vitor.combate_mortal.main.Util;
 
 public class Selecao implements StateMethods {
 
     GamePanel gp;
     BufferedImage bg;
-    BufferedImage[] players;
+    BufferedImage[] players, nomes;
     BufferedImage[][] lutadores;
     int indexPlayer = 0, estadoPlayer = 0, lutador1 = -1, lutador2= -1, espera = 0, igual = 0;
-    boolean terminou = false;
+    boolean terminou = false, musica = false;
+    Clip musicaDeFundo;
 
     public Selecao(GamePanel gp) {
         this.gp = gp;
@@ -26,14 +30,23 @@ public class Selecao implements StateMethods {
             espera++;
 
         if(espera >= 100) {
+            musicaDeFundo.stop();
             criarPlayers();
             GameStates.gameState = GameStates.JOGO;
+        }
+
+        if(!musica){
+            musicaDeFundo = Util.play("selecao_musica");
+            musica = true;
         }
     }
 
     public void draw(Graphics g) {
 
         g.drawImage(bg, 0, 0, 1200, 762, null);
+
+        if(!terminou)
+            g.drawImage(nomes[indexPlayer], 129*3, 16*3, nomes[0].getWidth()*6, nomes[0].getHeight()*6, null);
 
         if(lutador1 != -1)
             g.drawImage(lutadores[lutador1][0], 141, 291, 210, 285, null);
@@ -50,6 +63,13 @@ public class Selecao implements StateMethods {
     }
 
     public void keyPressed(KeyEvent e) {
+
+        if((e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_DOWN ||
+                e.getKeyCode() == KeyEvent.VK_W || e.getKeyCode() == KeyEvent.VK_UP ||
+                e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_LEFT ||
+                e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_RIGHT)
+                && !terminou)
+            Util.play("troca_personagem");
 
         if(e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_DOWN) {
             if(indexPlayer != 2 && indexPlayer != 5)
@@ -97,6 +117,7 @@ public class Selecao implements StateMethods {
                     terminou = true;
                 }
             }
+            Util.play("selecao_personagem");
         }
     }
 
@@ -111,9 +132,10 @@ public class Selecao implements StateMethods {
     // IMPORTANDO AS IMAGENS E COLOCANDO ELAS EM BUFFERED IMAGES
     public void setImages() {
 
-        BufferedImage lutadores_atlas = null, players_atlas = null, nomePlayers_esq = null, nomePlayers_dir=null;
+        BufferedImage lutadores_atlas = null, players_atlas = null, nomePlayers_esq = null, nomePlayers_dir=null, nomePlayers=null;
         try {
             bg = ImageIO.read(getClass().getResourceAsStream("/selecao/selecao_tela.png"));
+            nomePlayers = ImageIO.read(getClass().getResourceAsStream("/selecao/nome_selecao.png"));
             nomePlayers_esq = ImageIO.read(getClass().getResourceAsStream("/props/nome_barra_de_vida_esq.png"));
             nomePlayers_dir = ImageIO.read(getClass().getResourceAsStream("/props/nome_barra_de_vida_dir.png"));
             players_atlas = ImageIO.read(getClass().getResourceAsStream("/selecao/selecao_players.png"));
@@ -122,13 +144,16 @@ public class Selecao implements StateMethods {
             e.printStackTrace();
         }
 
+        nomes = new BufferedImage[6];
         players = new BufferedImage[2];
         lutadores = new BufferedImage[6][2];
         gp.jogo.nomes_esq = new BufferedImage[6];
+        gp.jogo.nomes_dir = new BufferedImage[6];
 
         for(int i=0; i<6; i++) {
             if(i<2)
                 players[i] = players_atlas.getSubimage(i*60, 0, 60, 60);
+            nomes[i] = nomePlayers.getSubimage(0, i*10, 72, 10);
             gp.jogo.nomes_esq[i] = nomePlayers_esq.getSubimage(0, i*10, 72, 10);
             gp.jogo.nomes_dir[i] = nomePlayers_dir.getSubimage(0, i*10, 72, 10);
         }
@@ -152,6 +177,7 @@ public class Selecao implements StateMethods {
         espera = 0;
         igual = 0;
         terminou = false;
+        musica = false;
     }
 
 }

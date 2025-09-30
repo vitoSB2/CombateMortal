@@ -31,7 +31,6 @@ public class Selecao implements StateMethods {
 
         if(espera >= 100) {
             musicaDeFundo.stop();
-            criarPlayers();
             GameStates.gameState = GameStates.JOGO;
         }
 
@@ -114,6 +113,7 @@ public class Selecao implements StateMethods {
                     if(lutador1 == indexPlayer) igual = 1;
                     lutador2 = indexPlayer;
                     estadoPlayer++;
+                    criarPlayers();
                     terminou = true;
                 }
             }

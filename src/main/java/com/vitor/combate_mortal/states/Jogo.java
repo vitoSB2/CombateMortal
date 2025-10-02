@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.sound.sampled.Clip;
 
@@ -36,6 +37,8 @@ public class Jogo implements StateMethods{
 
     boolean musica = false;
     Clip musicaArena;
+    Random alea = new Random();
+    int arena = alea.nextInt(5) + 1;
 
     public Jogo(GamePanel gp) {
         this.gp = gp;
@@ -163,8 +166,8 @@ public class Jogo implements StateMethods{
         endStart = 0;
         p1.ganhou = false;
         p2.ganhou = false;
+        setBg();
     }
-
 
     public void draw(Graphics g) {
         // FUNDO DA ARENA DE BATALHA
@@ -244,7 +247,6 @@ public class Jogo implements StateMethods{
 
     public void setImages() {
         try {
-            bg = ImageIO.read(getClass().getResourceAsStream("/props/arena_bg.png"));
             lifeBar = ImageIO.read(getClass().getResourceAsStream("/props/barra_de_vida.png"));
             specialBar = ImageIO.read(getClass().getResourceAsStream("/props/barra_de_especial.png"));
             nomes_esq = new BufferedImage[6];
@@ -257,6 +259,26 @@ public class Jogo implements StateMethods{
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void setBg() {
+        arena++;
+        if(arena > 5)
+            arena = 1;
+        
+        try {
+            bg = ImageIO.read(getClass().getResourceAsStream("/props/arena_bg"+arena+".png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if(arena == 2){
+            p1.chao = 680;
+            p2.chao = 680;
+        } else {
+            p1.chao = 640;
+            p2.chao = 640;
         }
     }
 

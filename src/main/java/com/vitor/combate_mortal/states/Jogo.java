@@ -56,7 +56,7 @@ public class Jogo implements StateMethods{
 
     private void checkCollisions() {
         // Verifica colisão P1 atacando P2
-        if (p1.attack && p1.hitbox.intersects(p2.hurtbox) && !p1.hitConnectedThisAttack) {
+        if (p1.attack && p1.hitbox.intersects(p2.hurtbox) && !p1.hitConnectedThisAttack && !ended) {
             int dano = 0;
             switch (p1.tipoAtaque) {
                 case 1: // Soco Fraco
@@ -85,13 +85,15 @@ public class Jogo implements StateMethods{
                 vencedor = 1;
                 ended = true;
                 p1.ganhou=true;
+                musicaArena.stop();
+                Util.play("vitoria");
             }
             p1.hitConnectedThisAttack = true;
             Util.play("acerto");
         }
 
         // Verifica colisão P2 atacando P1
-        if (p2.attack && p2.hitbox.intersects(p1.hurtbox) && !p2.hitConnectedThisAttack) {
+        if (p2.attack && p2.hitbox.intersects(p1.hurtbox) && !p2.hitConnectedThisAttack && !ended) {
             int dano = 0;
             switch (p2.tipoAtaque) {
                 case 1: // Soco Fraco
@@ -120,6 +122,8 @@ public class Jogo implements StateMethods{
                 vencedor = 2;
                 ended = true;
                 p2.ganhou=true;
+                musicaArena.stop();
+                Util.play("vitoria");
             }
             p2.hitConnectedThisAttack = true;
             Util.play("acerto");
@@ -138,7 +142,6 @@ public class Jogo implements StateMethods{
             }
 
             if(endNow - endStart >= 3000) {
-                musicaArena.stop();
                 GameStates.gameState = GameStates.VITORIA;
                 if(vencedor == 1) gp.vitoria.setVencedor(p1.personagem, 0);
                 else if(vencedor == 2){

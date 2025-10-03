@@ -182,34 +182,34 @@ public class Jogo implements StateMethods{
 
         //HUD DE VIDA E NOME DOS LUTADORES
         // BARRAS DE VIDA
-        g.drawImage(lifeBar, 20, 80, lifeBar.getWidth()*3, lifeBar.getHeight()*3, gp);
-        g.drawImage(lifeBar, gp.getWidth() - lifeBar.getWidth()*3 - 20, 80, lifeBar.getWidth()*3, lifeBar.getHeight()*3, gp);
+        g.drawImage(lifeBar, 50, 80, lifeBar.getWidth()*3, lifeBar.getHeight()*3, gp);
+        g.drawImage(lifeBar, gp.getWidth() - lifeBar.getWidth()*3 - 50, 80, lifeBar.getWidth()*3, lifeBar.getHeight()*3, gp);
         // PARTE VERDE (REPRESENTA A QUANTIDADE DE VIDA
         g.setColor(new Color(0, 180, 0));
-        g.fillRect(29, 89, (486*p1.vida)/120, lifeBar.getHeight()*3-18);
-        g.fillRect(gp.getWidth() - 29 - (486 * p2.vida) / 120, 89, (486 * p2.vida) / 120, lifeBar.getHeight()*3-18);
+        g.fillRect(59, 89, (486*p1.vida)/120, lifeBar.getHeight()*3-18);
+        g.fillRect(gp.getWidth() - 59 - (486 * p2.vida) / 120, 89, (486 * p2.vida) / 120, lifeBar.getHeight()*3-18);
 
         // NOME DOS PERSONAGENS NA BARRA DE VIDA
-        g.drawImage(nomes_esq[p1.personagem], 60, 91, nomes_esq[0].getWidth()*3, nomes_esq[0].getHeight()*3, gp);
-        g.drawImage(nomes_dir[p2.personagem], gp.getWidth() - nomes_dir[0].getWidth()*3 - 60, 91, nomes_dir[0].getWidth()*3, nomes_dir[0].getHeight()*3, gp);
+        g.drawImage(nomes_esq[p1.personagem], 100, 91, nomes_esq[0].getWidth()*3, nomes_esq[0].getHeight()*3, gp);
+        g.drawImage(nomes_dir[p2.personagem], gp.getWidth() - nomes_dir[0].getWidth()*3 - 100, 91, nomes_dir[0].getWidth()*3, nomes_dir[0].getHeight()*3, gp);
 
         // BARRAS DE ESPECIAL
-        g.drawImage(specialBar, 20, 150,  specialBar.getWidth()*3, specialBar.getHeight()*3, gp);
-        g.drawImage(specialBar, gp.getWidth() - specialBar.getWidth()*3 - 20, 150,  specialBar.getWidth()*3, specialBar.getHeight()*3, gp);
+        g.drawImage(specialBar, 50, 150,  specialBar.getWidth()*3, specialBar.getHeight()*3, gp);
+        g.drawImage(specialBar, gp.getWidth() - specialBar.getWidth()*3 - 50, 150,  specialBar.getWidth()*3, specialBar.getHeight()*3, gp);
         // PARTE AZUL
         g.setColor(new Color(0, 0, 180));
         if((p1.specialNow - p1.specialStart) < p1.specialCooldown){
             float quantEsp = (float)(p1.specialNow - p1.specialStart) / (float)p1.specialCooldown;
-            g.fillRect(26, 156, (int)(((specialBar.getWidth()*3)-12)*quantEsp), specialBar.getHeight()*3-18);
+            g.fillRect(56, 156, (int)(((specialBar.getWidth()*3)-12)*quantEsp), specialBar.getHeight()*3-18);
         } else
-            g.fillRect(26, 156, ((specialBar.getWidth()*3)-12),  specialBar.getHeight()*3-18);
+            g.fillRect(56, 156, ((specialBar.getWidth()*3)-12),  specialBar.getHeight()*3-18);
 
         if((p2.specialNow - p2.specialStart) < p2.specialCooldown){
             float quantEsp = (float)(p2.specialNow - p2.specialStart) / (float)p2.specialCooldown;
             int widthEsp = (int)(((specialBar.getWidth()*3)-12)*quantEsp);
-            g.fillRect((gp.getWidth()-specialBar.getWidth()*3-14)+(((specialBar.getWidth()*3)-12)-widthEsp), 156, widthEsp, specialBar.getHeight()*3-18);
+            g.fillRect((gp.getWidth()-specialBar.getWidth()*3-44)+(((specialBar.getWidth()*3)-12)-widthEsp), 156, widthEsp, specialBar.getHeight()*3-18);
         } else
-            g.fillRect(gp.getWidth()-specialBar.getWidth()*3-14, 156, (specialBar.getWidth()*3)-12,  specialBar.getHeight()*3-18);
+            g.fillRect(gp.getWidth()-specialBar.getWidth()*3-44, 156, (specialBar.getWidth()*3)-12,  specialBar.getHeight()*3-18);
 
         // OS PERSONAGENS
         p1.draw(g);
@@ -273,7 +273,7 @@ public class Jogo implements StateMethods{
             e.printStackTrace();
         }
 
-        if(arena == 2){
+        if(arena == 4 || arena == 5){
             p1.chao = 680;
             p2.chao = 680;
         } else {

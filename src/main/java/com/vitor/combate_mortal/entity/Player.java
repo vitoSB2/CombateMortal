@@ -32,7 +32,7 @@ public class Player {
 
     // VARIAVEIS DE ATAQUE
     public boolean attack=false, punch=false, punch2=false, kick=false, kick2=false,
-            punchPressed=false, kickPressed=false, atacado=false;
+            punchPressed=false, kickPressed=false,punch2Pressed=false, kick2Pressed=false, atacado=false;
     long attackStart, attackNow, tempoAtaque, atacadoStart, atacadoNow;
     public int tipoAtaque, vida = 120;
     public boolean hitConnectedThisAttack = false;
@@ -41,6 +41,9 @@ public class Player {
     public boolean especial1=false, especial2=false;
     public int xProjetil, yProjetil, widthProjetil, heightProjetil, direcaoInicialEspecial;
     public long specialStart, specialNow, specialCooldown = 3000;
+    // PARA AS COMBINAÇÕES DE BOTÕES
+    int socoFracoBuffer = 0, socoForteBuffer = 0, chuteFracoBuffer = 0,
+            chuteForteBuffer = 0, bufferMax = 6;
 
     int gapAgachado;
 
@@ -73,6 +76,93 @@ public class Player {
 
         y = chao - height;
         hurtbox.setBounds(x, y, width, height);
+    }
+
+    // ATUALIZA PARA COMEÇAR OS ATAQUES
+    public void updateComecoAtaque() {
+        // ESPECIAIS
+        if(socoFracoBuffer > 0 && socoForteBuffer > 0 && !attack && !atacado){
+            comecarEspecial1();
+            socoForteBuffer = 0;
+            socoFracoBuffer = 0;
+        }
+        if(chuteFracoBuffer > 0 && chuteForteBuffer > 0 && !attack && !atacado){
+            comecarEspecial2();
+            chuteFracoBuffer = 0;
+            chuteForteBuffer = 0;
+        }
+
+        // SOCOS
+        if(socoFracoBuffer == 1)
+            comecarSoco();
+        if(socoForteBuffer == 1)
+            comecarSoco2();
+        // CHUTES
+        if(chuteFracoBuffer == 1)
+            comecarChute();
+        if(chuteForteBuffer == 1)
+            comecarChute2();
+
+        // DECREMENTANDO
+        if(socoFracoBuffer > 0)
+            socoFracoBuffer--;
+        if(socoForteBuffer > 0)
+            socoForteBuffer--;
+        if(chuteFracoBuffer > 0)
+            chuteFracoBuffer--;
+        if(chuteForteBuffer > 0)
+            chuteForteBuffer--;
+    }
+
+    // COMEÇAR ATAQUES
+    public void comecarSoco() {
+        if (!attack && !atacado)
+            if(noAr && airSpeed < 8)
+                initAttack(300, 1);
+            else if (!noAr)
+                initAttack(300, 1);
+    }
+    public void comecarSoco2() {
+        if (!attack && !atacado)
+            if(noAr && airSpeed < 8)
+                initAttack(300, 3);
+            else if(agachado)
+                initAttack(300, 3);
+            else if (!noAr)
+                initAttack(400, 3);
+    }
+    public void comecarChute() {
+        if (!attack && !atacado)
+            if(noAr && airSpeed < 8)
+                initAttack(300, 2);
+            else if (!noAr)
+                initAttack(400, 2);
+    }
+    public void comecarChute2() {
+        if (!attack && !atacado)
+            if(noAr && airSpeed < 8)
+                initAttack(300, 4);
+            else if(agachado)
+                initAttack(400, 4);
+            else if (!noAr)
+                initAttack(500, 4);
+    }
+    public void comecarEspecial1() {
+        if (!attack && !atacado && !noAr && !agachado)
+            if(personagem == 0)
+                initAttack(800, 5);
+            else if(personagem == 1)
+                initAttack(500, 5);
+            else if(personagem == 2)
+                initAttack(600, 5);
+            else if(personagem == 3 || personagem == 4)
+                initAttack(1000, 5);
+            else if(personagem == 5)
+                initAttack(1000, 5);
+    }
+    public void comecarEspecial2() {
+        if (!attack && !atacado && !noAr && !agachado)
+            initAttack(600, 6);
     }
 
     public void endAttack() {

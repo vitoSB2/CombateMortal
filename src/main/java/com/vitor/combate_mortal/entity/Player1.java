@@ -25,6 +25,9 @@ public class Player1 extends Player implements PlayerMethods {
         if (x > Jogo.p2.x) isLeft = false;
         else isLeft = true;
 
+        // ATUALIZA PARA COMEÇAR OS ATAQUES
+        updateComecoAtaque();
+
         // ATUALIZA O TEMPO DE ATACADO
         updateAtacado();
 
@@ -251,69 +254,39 @@ public class Player1 extends Player implements PlayerMethods {
         // INPUTS DE ATAQUE
         // SOCO FRACO
         if (e.getKeyCode() == KeyEvent.VK_R){
-            if (!attack && !punchPressed && !atacado)
-                if(noAr && airSpeed < 8)
-                    initAttack(300, 1);
-                else if (!noAr)
-                    initAttack(300, 1);
-            punchPressed = true;
+            if(socoFracoBuffer == 0 && !punchPressed){
+                punchPressed = true;
+                if(!attack && !atacado)
+                    socoFracoBuffer = bufferMax;
+            }
         }
 
         // SOCO FORTE
         if (e.getKeyCode() == KeyEvent.VK_T){
-            if (!attack && !punchPressed && !atacado)
-                if(noAr && airSpeed < 8)
-                    initAttack(300, 3);
-                else if(agachado)
-                    initAttack(300, 3);
-                else if (!noAr)
-                    initAttack(400, 3);
-            punchPressed = true;
+            if(socoForteBuffer == 0 && !punch2Pressed){
+                punch2Pressed = true;
+                if(!attack && !atacado)
+                    socoForteBuffer = bufferMax;
+            }
         }
 
         // CHUTE FRACO
         if (e.getKeyCode() == KeyEvent.VK_F){
-            if (!attack && !kickPressed && !atacado)
-                if(noAr && airSpeed < 8)
-                    initAttack(300, 2);
-                else if (!noAr)
-                    initAttack(400, 2);
-            kickPressed = true;
+            if(chuteFracoBuffer == 0 && !kickPressed){
+                kickPressed = true;
+                if(!attack && !atacado)
+                    chuteFracoBuffer = bufferMax;
+            }
         }
 
         // CHUTE FORTE
         if (e.getKeyCode() == KeyEvent.VK_G) {
-            if (!attack && !kickPressed && !atacado)
-                if(noAr && airSpeed < 8)
-                    initAttack(300, 4);
-                else if(agachado)
-                    initAttack(400, 4);
-                else if (!noAr)
-                    initAttack(500, 4);
-            kickPressed = true;
-        }
-
-        // TESTE ESPECIAL
-        if (e.getKeyCode() == KeyEvent.VK_Y){
-            if (!attack && !atacado && !noAr && !agachado){
-                if(personagem == 0)
-                    initAttack(800, 5);
-                else if(personagem == 1)
-                    initAttack(500, 5);
-                else if(personagem == 2)
-                    initAttack(600, 5);
-                else if(personagem == 3 || personagem == 4)
-                    initAttack(1000, 5);
-                else if(personagem == 5)
-                    initAttack(1000, 5);
+            if(chuteForteBuffer == 0 && !kick2Pressed){
+                kick2Pressed = true;
+                if(!attack && !atacado)
+                    chuteForteBuffer = bufferMax;
             }
         }
-        if (e.getKeyCode() == KeyEvent.VK_H){
-            if (!attack && !atacado && !noAr && !agachado){
-                initAttack(600, 6);
-            }
-        }
-
     }
 
     public void keyReleased(KeyEvent e) {
@@ -333,11 +306,11 @@ public class Player1 extends Player implements PlayerMethods {
         if (e.getKeyCode() == KeyEvent.VK_R)
             punchPressed = false;
         if (e.getKeyCode() == KeyEvent.VK_T)
-            punchPressed = false;
+            punch2Pressed = false;
         if (e.getKeyCode() == KeyEvent.VK_F)
             kickPressed = false;
         if (e.getKeyCode() == KeyEvent.VK_G)
-            kickPressed = false;
+            kick2Pressed = false;
     }
 
     public void keyTyped(KeyEvent e) {

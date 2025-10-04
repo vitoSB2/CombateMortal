@@ -60,8 +60,9 @@ public class Vitoria implements StateMethods{
     @Override
     public void update() {
         if(!musica) {
-            musicaVitoria = Util.play("selecao_musica");
             musica = true;
+            musicaVitoria = Util.play("selecao_musica");
+            musicaVitoria.loop(-1);
         }
 
         currentTime = System.currentTimeMillis();

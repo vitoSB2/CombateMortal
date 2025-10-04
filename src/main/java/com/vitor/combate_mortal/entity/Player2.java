@@ -217,11 +217,6 @@ public class Player2 extends Player implements PlayerMethods {
 
     // INPUTS
     public void keyPressed(KeyEvent e) {
-        if ((e.getKeyCode() == KeyEvent.VK_NUMPAD4 || e.getKeyCode() == KeyEvent.VK_NUMPAD5 ||
-                e.getKeyCode() == KeyEvent.VK_NUMPAD1 || e.getKeyCode() == KeyEvent.VK_NUMPAD2)
-                && !atacado && !attack)
-            Util.play("ataque");
-
         // INPUTS DE MOVIMENTAÇÃO
         if (e.getKeyCode() == KeyEvent.VK_UP) {
             if (!jumpPressed) {

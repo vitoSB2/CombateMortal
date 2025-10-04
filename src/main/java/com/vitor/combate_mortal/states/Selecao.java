@@ -35,8 +35,9 @@ public class Selecao implements StateMethods {
         }
 
         if(!musica){
-            musicaDeFundo = Util.play("selecao_musica");
             musica = true;
+            musicaDeFundo = Util.play("selecao_musica");
+            musicaDeFundo.loop(-1);
         }
     }
 

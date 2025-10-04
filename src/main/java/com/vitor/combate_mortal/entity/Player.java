@@ -3,6 +3,7 @@ package com.vitor.combate_mortal.entity;
 import com.vitor.combate_mortal.inputs.Inputs;
 import java.awt.Rectangle;
 import com.vitor.combate_mortal.main.GamePanel;
+import com.vitor.combate_mortal.main.Util;
 
 public class Player {
 
@@ -292,6 +293,7 @@ public class Player {
         }
 
         tipoAtaque = tipo;
+        Util.play("ataque");
     }
 
     // INICIA O TEMPO DE ATACADO

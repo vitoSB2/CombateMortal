@@ -51,6 +51,7 @@ public class Jogo implements StateMethods{
         if(!musica){
             musica = true;
             musicaArena = Util.play("batalha");
+            musicaArena.loop(-1);
         }
         p1.update();
         p2.update();

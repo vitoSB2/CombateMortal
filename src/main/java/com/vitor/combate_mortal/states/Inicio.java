@@ -24,6 +24,7 @@ public class Inicio implements StateMethods{
 
         // COMEÇA A MÚSICA DO INÍCIO
         musicaTema = Util.play("tema");
+        musicaTema.loop(-1);
     }
 
     public void setImages() {

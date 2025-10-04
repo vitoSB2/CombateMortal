@@ -43,7 +43,7 @@ public class Player {
     public long specialStart, specialNow, specialCooldown = 3000;
     // PARA AS COMBINAÇÕES DE BOTÕES
     int socoFracoBuffer = 0, socoForteBuffer = 0, chuteFracoBuffer = 0,
-            chuteForteBuffer = 0, bufferMax = 6;
+            chuteForteBuffer = 0, bufferMax = 2;
 
     int gapAgachado;
 

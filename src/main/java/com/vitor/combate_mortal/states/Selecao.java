@@ -105,7 +105,7 @@ public class Selecao implements StateMethods {
                 indexPlayer+=3;
         }
 
-        if(e.getKeyCode() == KeyEvent.VK_ENTER && !terminou) {
+        if((e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE) && !terminou) {
             if(estadoPlayer != 1) {
                 estadoPlayer++;
                 lutador1 = indexPlayer;

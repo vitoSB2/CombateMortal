@@ -28,7 +28,7 @@ public class Jogo implements StateMethods{
     private static final int DANO_CHUTE_FRACO = 10;
     private static final int DANO_SOCO_FORTE = 15;
     private static final int DANO_CHUTE_FORTE = 15;
-    private static final int DANO_ESPECIAL_1 = 20;
+    private static final int DANO_ESPECIAL_1 = 25;
     private static final int DANO_ESPECIAL_2 = 25;
 
     // INTERVALO PRA PASSAR PRA TELA DE VITÓRIA
@@ -157,7 +157,6 @@ public class Jogo implements StateMethods{
             }
         }
     }
-
 
     public void resetJogo() {
         musica = false;

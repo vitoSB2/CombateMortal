@@ -18,7 +18,7 @@ public class Player {
     public float velocidade = 6.0f;
 
     // PULANDO / GRAVIDADE
-    public float airSpeed= 0f, jumpSpeed = -18f, gravity = 0.5f;
+    public float airSpeed= 0f, jumpSpeed = -18f, gravity = 0.6f;
     public boolean noAr;
 
     // VERIFICA SE O JOGADOR ESTÁ DO LADO ESQUERDO DA TELA (EM RELAÇÃO AO OUTRO PLAYER)
@@ -34,14 +34,14 @@ public class Player {
     // VARIAVEIS DE ATAQUE
     public boolean attack=false, punch=false, punch2=false, kick=false, kick2=false,
             punchPressed=false, kickPressed=false,punch2Pressed=false, kick2Pressed=false, atacado=false;
-    long attackStart, attackNow, tempoAtaque, atacadoStart, atacadoNow;
-    public int tipoAtaque, vida = 120;
+    long attackStart, attackNow, tempoAtaque, atacadoStart, atacadoNow, tempoAtacado = 300;
+    public int tipoAtaque, cooldownMax = 15, tempoCooldown = 0, vida = 120;
     public boolean hitConnectedThisAttack = false;
 
     // VARIÁVEIS DOS ESPECIAIS
     public boolean especial1=false, especial2=false;
     public int xProjetil, yProjetil, widthProjetil, heightProjetil, direcaoInicialEspecial;
-    public long specialStart, specialNow, specialCooldown = 3000;
+    public long specialStart, specialNow, specialCooldown = 2800;
     // PARA AS COMBINAÇÕES DE BOTÕES
     int socoFracoBuffer = 0, socoForteBuffer = 0, chuteFracoBuffer = 0,
             chuteForteBuffer = 0, bufferMax = 2;
@@ -65,7 +65,7 @@ public class Player {
             height = 270;
 
         if(personagem == 3 || personagem == 4)
-            gapAgachado = 40;
+            gapAgachado = 30;
         else
             gapAgachado = 20;
 
@@ -81,38 +81,42 @@ public class Player {
 
     // ATUALIZA PARA COMEÇAR OS ATAQUES
     public void updateComecoAtaque() {
-        // ESPECIAIS
-        if(socoFracoBuffer > 0 && socoForteBuffer > 0 && !attack && !atacado){
-            comecarEspecial1();
-            socoForteBuffer = 0;
-            socoFracoBuffer = 0;
-        }
-        if(chuteFracoBuffer > 0 && chuteForteBuffer > 0 && !attack && !atacado){
-            comecarEspecial2();
-            chuteFracoBuffer = 0;
-            chuteForteBuffer = 0;
-        }
+        if(tempoCooldown == 0) {
+            // ESPECIAIS
+            if (socoFracoBuffer > 0 && socoForteBuffer > 0 && !attack && !atacado) {
+                comecarEspecial1();
+                socoForteBuffer = 0;
+                socoFracoBuffer = 0;
+            }
+            if (chuteFracoBuffer > 0 && chuteForteBuffer > 0 && !attack && !atacado) {
+                comecarEspecial2();
+                chuteFracoBuffer = 0;
+                chuteForteBuffer = 0;
+            }
 
-        // SOCOS
-        if(socoFracoBuffer == 1)
-            comecarSoco();
-        if(socoForteBuffer == 1)
-            comecarSoco2();
-        // CHUTES
-        if(chuteFracoBuffer == 1)
-            comecarChute();
-        if(chuteForteBuffer == 1)
-            comecarChute2();
+            // SOCOS
+            if (socoFracoBuffer == 1)
+                comecarSoco();
+            if (socoForteBuffer == 1)
+                comecarSoco2();
+            // CHUTES
+            if (chuteFracoBuffer == 1)
+                comecarChute();
+            if (chuteForteBuffer == 1)
+                comecarChute2();
 
-        // DECREMENTANDO
-        if(socoFracoBuffer > 0)
-            socoFracoBuffer--;
-        if(socoForteBuffer > 0)
-            socoForteBuffer--;
-        if(chuteFracoBuffer > 0)
-            chuteFracoBuffer--;
-        if(chuteForteBuffer > 0)
-            chuteForteBuffer--;
+            // DECREMENTANDO
+            if (socoFracoBuffer > 0)
+                socoFracoBuffer--;
+            if (socoForteBuffer > 0)
+                socoForteBuffer--;
+            if (chuteFracoBuffer > 0)
+                chuteFracoBuffer--;
+            if (chuteForteBuffer > 0)
+                chuteForteBuffer--;
+        } else {
+            tempoCooldown--;
+        }
     }
 
     // COMEÇAR ATAQUES
@@ -178,6 +182,7 @@ public class Player {
         if(noAr) anim.estado = 1;
         else if(agachado) anim.estado = 2;
         else anim.estado =0;
+        tempoCooldown = cooldownMax;
     }
 
     public void updateAttack() {
@@ -209,7 +214,7 @@ public class Player {
         if (atacado) {
             atacadoNow = System.currentTimeMillis();
             // INTERVALO DE ACORDO COM O TIPO DE ATAQUE PARA ATACAR NOVAMENTE
-            if (atacadoNow - atacadoStart >= 250)
+            if (atacadoNow - atacadoStart >= tempoAtacado)
                 endAttack();// ENCERRA O ATAQUE, INDEPENDENTE DO TIPO
         }
     }

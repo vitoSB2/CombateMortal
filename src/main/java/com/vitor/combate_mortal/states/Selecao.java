@@ -164,8 +164,10 @@ public class Selecao implements StateMethods {
     }
 
     public void criarPlayers() {
+    	Jogo.p1.isLeft = true;
         Jogo.p1.selAnimations(lutador1, igual);
         Jogo.p1.resetPos();
+    	Jogo.p2.isLeft = false;
         Jogo.p2.selAnimations(lutador2, igual);
         Jogo.p2.resetPos();
     }

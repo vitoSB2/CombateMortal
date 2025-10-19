@@ -31,12 +31,12 @@ public class Player2 extends Player implements PlayerMethods {
         updateAtacado();
 
         // ATUALIZA O TEMPO DO ATAQUE
-        updateAttack();
         if(attack)
             if(hurtbox.intersects(Jogo.p1.hurtbox)){
                 if(x>Jogo.p1.x) x += 12;
                 else if(x<Jogo.p1.x) x -= 12;
             }
+        updateAttack();
 
         // ATUALIZA A POSIÇÃO
         updatePos();

@@ -15,10 +15,10 @@ public class Player {
     // VARIAVEIS DE MOVIMENTAÇÃO
     public boolean up=false, down=false, left=false, right=false, jump=false, agachado=false,
             jumpPressed=false, movingPressed=false, movendo = false, ganhou=false;
-    public float velocidade = 6.0f;
+    public float velocidade = 8.0f;
 
     // PULANDO / GRAVIDADE
-    public float airSpeed= 0f, jumpSpeed = -18f, gravity = 0.6f;
+    public float airSpeed= 0f, jumpSpeed = -22f, gravity = 0.8f;
     public boolean noAr;
 
     // VERIFICA SE O JOGADOR ESTÁ DO LADO ESQUERDO DA TELA (EM RELAÇÃO AO OUTRO PLAYER)
@@ -35,7 +35,7 @@ public class Player {
     public boolean attack=false, punch=false, punch2=false, kick=false, kick2=false,
             punchPressed=false, kickPressed=false,punch2Pressed=false, kick2Pressed=false, atacado=false;
     long attackStart, attackNow, tempoAtaque, atacadoStart, atacadoNow, tempoAtacado = 300;
-    public int tipoAtaque, cooldownMax = 15, tempoCooldown = 0, vida = 120;
+    public int tipoAtaque, cooldownMax = 15, tempoCooldown = 0, vida = 180, maxVida = 180;
     public boolean hitConnectedThisAttack = false;
 
     // VARIÁVEIS DOS ESPECIAIS
@@ -72,7 +72,7 @@ public class Player {
         width = 100;
         this.personagem = personagem;
         this.igual = igual;
-        vida = 120;
+        vida = maxVida;
         anim.setValores(this);
 
         y = chao - height;
@@ -256,12 +256,12 @@ public class Player {
 
             } else if(personagem == 1){
                 if(isLeft)
-                    xProjetil = x+100+width;
-                else xProjetil = x-100-300;
+                    xProjetil = x+60+width;
+                else xProjetil = x-60-160;
                 yProjetil = y+55;
-                widthProjetil = 300;
+                widthProjetil = 160;
                 heightProjetil = 64;
-                anim.gapXProjetil = 110;
+                anim.gapXProjetil = 200;
                 anim.gapYProjetil = 54;
                 anim.velAssets = 10;
 

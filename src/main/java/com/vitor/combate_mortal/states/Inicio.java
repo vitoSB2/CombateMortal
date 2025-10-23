@@ -10,63 +10,69 @@ import javax.sound.sampled.Clip;
 import com.vitor.combate_mortal.main.GamePanel;
 import com.vitor.combate_mortal.main.Util;
 
-public class Inicio implements StateMethods{
+public class Inicio implements StateMethods {
 
-    GamePanel gp;
-    BufferedImage bg, press_msg;
-    boolean pisca = true;
-    long lastTime, currentTime;
-    public static Clip musicaTema;
+	GamePanel gp;
+	BufferedImage bg, press_msg;
+	boolean pisca = true;
+	long lastTime, currentTime;
+	public static Clip musicaTema;
 
-    public Inicio(GamePanel gp){
-        this.gp = gp;
-        setImages();
+	public Inicio(GamePanel gp) {
+		this.gp = gp;
+		setImages();
 
-        // COMEÇA A MÚSICA DO INÍCIO
-        musicaTema = Util.play("tema");
-        musicaTema.loop(-1);
-    }
+		// COMEÇA A MÚSICA DO INÍCIO
+		musicaTema = Util.play("tema");
+		musicaTema.loop(-1);
+	}
 
-    public void setImages() {
-        try {
-            bg = ImageIO.read(getClass().getResourceAsStream("/telaInicial/tela_inicial.png"));
-            press_msg = ImageIO.read(getClass().getResourceAsStream("/telaInicial/tela_inicial_mensagem.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+	public void setImages() {
+		try {
+			bg = ImageIO.read(getClass().getResourceAsStream("/telaInicial/tela_inicial.png"));
+			press_msg = ImageIO.read(getClass().getResourceAsStream("/telaInicial/tela_inicial_mensagem.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-    @Override
-    public void update() {
-        currentTime = System.currentTimeMillis();
-        if(currentTime - lastTime >= 500){
-            if(pisca)pisca = false;
-            else pisca = true;
-            lastTime = currentTime;
-        }
-    }
+	@Override
+	public void update() {
+		currentTime = System.currentTimeMillis();
+		if (currentTime - lastTime >= 500) {
+			if (pisca)
+				pisca = false;
+			else
+				pisca = true;
+			lastTime = currentTime;
+		}
+	}
 
-    @Override
-    public void draw(Graphics g) {
-        g.drawImage(bg, 0, 0, gp.width, gp.height, null);
-        if(pisca) g.drawImage(press_msg, (gp.width-press_msg.getWidth()*2)/2, 680, press_msg.getWidth()*2, press_msg.getHeight()*2, gp);
-    }
+	@Override
+	public void draw(Graphics g) {
+		g.drawImage(bg, 0, 0, gp.width, gp.height, null);
+		if (pisca)
+			g.drawImage(press_msg, (gp.width - press_msg.getWidth() * 2) / 2, 680, press_msg.getWidth() * 2,
+					press_msg.getHeight() * 2, gp);
+	}
 
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-            GameStates.gameState = GameStates.SELECAO;
-        }
-    }
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE
+				|| e.getKeyCode() == KeyEvent.VK_F || e.getKeyCode() == KeyEvent.VK_NUMPAD1
+				|| e.getKeyCode() == KeyEvent.VK_K) {
+			GameStates.gameState = GameStates.SELECAO;
+		}
+	}
 
-    @Override
-    public void keyReleased(KeyEvent e) {
+	@Override
+	public void keyReleased(KeyEvent e) {
 
-    }
+	}
 
-    @Override
-    public void keyTyped(KeyEvent e) {
+	@Override
+	public void keyTyped(KeyEvent e) {
 
-    }
+	}
 
 }

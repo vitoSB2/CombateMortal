@@ -246,7 +246,7 @@ public class Player2 extends Player implements PlayerMethods {
 
         // INPUTS DE ATAQUE
         // SOCO FRACO
-        if (e.getKeyCode() == KeyEvent.VK_NUMPAD4){
+        if (e.getKeyCode() == KeyEvent.VK_NUMPAD4 || e.getKeyCode() == KeyEvent.VK_O){
             if(socoFracoBuffer == 0 && !punchPressed){
                 punchPressed = true;
                 if(!attack && !atacado)
@@ -255,7 +255,7 @@ public class Player2 extends Player implements PlayerMethods {
         }
 
         // SOCO FORTE
-        if (e.getKeyCode() == KeyEvent.VK_NUMPAD5){
+        if (e.getKeyCode() == KeyEvent.VK_NUMPAD5 || e.getKeyCode() == KeyEvent.VK_P){
             if(socoForteBuffer == 0 && !punch2Pressed){
                 punch2Pressed = true;
                 if(!attack && !atacado)
@@ -264,7 +264,7 @@ public class Player2 extends Player implements PlayerMethods {
         }
 
         // CHUTE FRACO
-        if (e.getKeyCode() == KeyEvent.VK_NUMPAD1){
+        if (e.getKeyCode() == KeyEvent.VK_NUMPAD1 || e.getKeyCode() == KeyEvent.VK_K){
             if(chuteFracoBuffer == 0 && !kickPressed){
                 kickPressed = true;
                 if(!attack && !atacado)
@@ -273,7 +273,7 @@ public class Player2 extends Player implements PlayerMethods {
         }
 
         // CHUTE FORTE
-        if (e.getKeyCode() == KeyEvent.VK_NUMPAD2) {
+        if (e.getKeyCode() == KeyEvent.VK_NUMPAD2 || e.getKeyCode() == KeyEvent.VK_L) {
             if(chuteForteBuffer == 0 && !kick2Pressed){
                 kick2Pressed = true;
                 if(!attack && !atacado)
@@ -298,13 +298,13 @@ public class Player2 extends Player implements PlayerMethods {
         }
 
         // INPUTS DE ATAQUE
-        if (e.getKeyCode() == KeyEvent.VK_NUMPAD4)
+        if (e.getKeyCode() == KeyEvent.VK_NUMPAD4 || e.getKeyCode() == KeyEvent.VK_O)
             punchPressed = false;
-        if (e.getKeyCode() == KeyEvent.VK_NUMPAD5)
+        if (e.getKeyCode() == KeyEvent.VK_NUMPAD5 || e.getKeyCode() == KeyEvent.VK_P)
             punch2Pressed = false;
-        if (e.getKeyCode() == KeyEvent.VK_NUMPAD1)
+        if (e.getKeyCode() == KeyEvent.VK_NUMPAD1 || e.getKeyCode() == KeyEvent.VK_K)
             kickPressed = false;
-        if (e.getKeyCode() == KeyEvent.VK_NUMPAD2)
+        if (e.getKeyCode() == KeyEvent.VK_NUMPAD2 || e.getKeyCode() == KeyEvent.VK_L)
             kick2Pressed = false;
     }
 

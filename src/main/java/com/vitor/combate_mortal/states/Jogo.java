@@ -227,14 +227,14 @@ public class Jogo implements StateMethods {
 		p2.draw(g);
 
 		// DELIMITAÇÃO DA HURTBOX E HITBOX DE CADA PLAYER
-		g.setColor(new Color(0, 180, 0));
-		g.drawRect(p1.hurtbox.x, p1.hurtbox.y, p1.hurtbox.width, p1.hurtbox.height);
-		g.drawRect(p2.hurtbox.x, p2.hurtbox.y, p2.hurtbox.width, p2.hurtbox.height);
-		g.setColor(new Color(180, 0, 0));
-		if (p1.attack)
-			g.drawRect(p1.hitbox.x, p1.hitbox.y, p1.hitbox.width, p1.hitbox.height);
-		if (p2.attack)
-			g.drawRect(p2.hitbox.x, p2.hitbox.y, p2.hitbox.width, p2.hitbox.height);
+//		g.setColor(new Color(0, 180, 0));
+//		g.drawRect(p1.hurtbox.x, p1.hurtbox.y, p1.hurtbox.width, p1.hurtbox.height);
+//		g.drawRect(p2.hurtbox.x, p2.hurtbox.y, p2.hurtbox.width, p2.hurtbox.height);
+//		g.setColor(new Color(180, 0, 0));
+//		if (p1.attack)
+//			g.drawRect(p1.hitbox.x, p1.hitbox.y, p1.hitbox.width, p1.hitbox.height);
+//		if (p2.attack)
+//			g.drawRect(p2.hitbox.x, p2.hitbox.y, p2.hitbox.width, p2.hitbox.height);
 	}
 
 	public void keyPressed(KeyEvent e) {

@@ -64,61 +64,49 @@ public class Selecao implements StateMethods {
 
     public void keyPressed(KeyEvent e) {
 
-        if((e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_DOWN ||
-                e.getKeyCode() == KeyEvent.VK_W || e.getKeyCode() == KeyEvent.VK_UP ||
-                e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_LEFT ||
-                e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_RIGHT)
-                && !terminou)
-            Util.play("troca_personagem");
+        // SELEÇÃO PRO P1
+        if(estadoPlayer == 0){
+            if((e.getKeyCode() == KeyEvent.VK_S ||
+                    e.getKeyCode() == KeyEvent.VK_W ||
+                    e.getKeyCode() == KeyEvent.VK_A ||
+                    e.getKeyCode() == KeyEvent.VK_D) && !terminou)
+                Util.play("troca_personagem");
 
-        if(e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_DOWN) {
-            if(indexPlayer != 2 && indexPlayer != 5)
-                indexPlayer++;
-            else
-                if(indexPlayer == 2)
-                    indexPlayer = 0;
-                else
-                    indexPlayer = 3;
+            if(e.getKeyCode() == KeyEvent.VK_W)
+                mudarCima();
+            if (e.getKeyCode() == KeyEvent.VK_A)
+                mudarDireita();
+            if(e.getKeyCode() == KeyEvent.VK_D)
+                mudarEsquerda();
+            if(e.getKeyCode() == KeyEvent.VK_S)
+                mudarBaixo();
+
+            if((e.getKeyCode() == KeyEvent.VK_F || e.getKeyCode() == KeyEvent.VK_R
+                    || e.getKeyCode() == KeyEvent.VK_T || e.getKeyCode() == KeyEvent.VK_G) && !terminou)
+                selecionar();
         }
+        // SELEÇÃO PRO P2
+        if (estadoPlayer == 1) {
+            if((e.getKeyCode() == KeyEvent.VK_UP ||
+                    e.getKeyCode() == KeyEvent.VK_DOWN ||
+                    e.getKeyCode() == KeyEvent.VK_RIGHT ||
+                    e.getKeyCode() == KeyEvent.VK_LEFT) && !terminou)
+                Util.play("troca_personagem");
 
-        if(e.getKeyCode() == KeyEvent.VK_W || e.getKeyCode() == KeyEvent.VK_UP) {
-            if(indexPlayer != 0 && indexPlayer != 3)
-                indexPlayer--;
-            else
-                if(indexPlayer == 0)
-                    indexPlayer = 2;
-                else
-                    indexPlayer = 5;
-        }
+            if(e.getKeyCode() == KeyEvent.VK_UP)
+                mudarCima();
+            if (e.getKeyCode() == KeyEvent.VK_RIGHT)
+                mudarDireita();
+            if(e.getKeyCode() == KeyEvent.VK_LEFT)
+                mudarEsquerda();
+            if(e.getKeyCode() == KeyEvent.VK_DOWN)
+                mudarBaixo();
 
-        if(e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_LEFT) {
-            if(indexPlayer < 3)
-                indexPlayer+=3;
-            else
-                indexPlayer-=3;
-        }
-
-        if(e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            if(indexPlayer > 2)
-                indexPlayer-=3;
-            else
-                indexPlayer+=3;
-        }
-
-        if((e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE) && !terminou) {
-            if(estadoPlayer != 1) {
-                estadoPlayer++;
-                lutador1 = indexPlayer;
-            }else {
-                if(!terminou){
-                    if(lutador1 == indexPlayer) igual = 1;
-                    lutador2 = indexPlayer;
-                    estadoPlayer++;
-                    criarPlayers();
-                    terminou = true;
-                }
-            }
-            Util.play("selecao_personagem");
+            if((e.getKeyCode() == KeyEvent.VK_NUMPAD1 || e.getKeyCode() == KeyEvent.VK_NUMPAD2
+                    || e.getKeyCode() == KeyEvent.VK_NUMPAD5 || e.getKeyCode() == KeyEvent.VK_NUMPAD4
+                    || e.getKeyCode() == KeyEvent.VK_O || e.getKeyCode() == KeyEvent.VK_P
+                    || e.getKeyCode() == KeyEvent.VK_K || e.getKeyCode() == KeyEvent.VK_L) && !terminou)
+                selecionar();
         }
     }
 
@@ -128,6 +116,56 @@ public class Selecao implements StateMethods {
 
     public void keyTyped(KeyEvent e) {
 
+    }
+
+    private void mudarCima(){
+        if(indexPlayer != 0 && indexPlayer != 3)
+            indexPlayer--;
+        else
+        if(indexPlayer == 0)
+            indexPlayer = 2;
+        else
+            indexPlayer = 5;
+    }
+
+    private void mudarEsquerda(){
+        if(indexPlayer < 3)
+            indexPlayer+=3;
+        else
+            indexPlayer-=3;
+    }
+
+    private void mudarDireita(){
+        if(indexPlayer > 2)
+            indexPlayer-=3;
+        else
+            indexPlayer+=3;
+    }
+
+    private void mudarBaixo(){
+        if(indexPlayer != 2 && indexPlayer != 5)
+            indexPlayer++;
+        else
+        if(indexPlayer == 2)
+            indexPlayer = 0;
+        else
+            indexPlayer = 3;
+    }
+
+    private void selecionar(){
+        if(estadoPlayer != 1) {
+            estadoPlayer++;
+            lutador1 = indexPlayer;
+        }else {
+            if(!terminou){
+                if(lutador1 == indexPlayer) igual = 1;
+                lutador2 = indexPlayer;
+                estadoPlayer++;
+                criarPlayers();
+                terminou = true;
+            }
+        }
+        Util.play("selecao_personagem");
     }
 
     // IMPORTANDO AS IMAGENS E COLOCANDO ELAS EM BUFFERED IMAGES

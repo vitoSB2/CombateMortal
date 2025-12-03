@@ -1,7 +1,6 @@
 package com.vitor.combate_mortal.states;
 
-import com.vitor.combate_mortal.entity.Player1;
-import com.vitor.combate_mortal.entity.Player2;
+import com.vitor.combate_mortal.entity.Player;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
@@ -17,8 +16,8 @@ import com.vitor.combate_mortal.main.Util;
 public class Jogo implements StateMethods {
 
 	GamePanel gp;
-	public static Player1 p1;
-	public static Player2 p2;
+	public static Player p1;
+	public static Player p2;
 	int vencedor;
 	BufferedImage bg, lifeBar, specialBar;
 	BufferedImage[] nomes_esq, nomes_dir;
@@ -43,8 +42,12 @@ public class Jogo implements StateMethods {
 	public Jogo(GamePanel gp) {
 		this.gp = gp;
 		setImages();
-		p1 = new Player1(gp, 100);
-		p2 = new Player2(gp, 1000);
+		p1 = new Player(gp, 250, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_W, KeyEvent.VK_S,
+                KeyEvent.VK_R, KeyEvent.VK_T, KeyEvent.VK_F, KeyEvent.VK_G);
+		p2 = new Player(gp, 850, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_UP, KeyEvent.VK_DOWN,
+                KeyEvent.VK_NUMPAD4, KeyEvent.VK_NUMPAD5, KeyEvent.VK_NUMPAD1, KeyEvent.VK_NUMPAD2);
+        p1.definirPlayerComparacao(p2);
+        p2.definirPlayerComparacao(p1);
 	}
 
 	public void update() {

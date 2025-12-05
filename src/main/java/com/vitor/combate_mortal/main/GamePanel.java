@@ -49,7 +49,6 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void run() {
-        //ATUALIZA O PANEL A 60fps
         long intervalo = 1000000000 / 60;
         long lastTime = System.nanoTime();
         long currentTime;

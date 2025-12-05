@@ -48,7 +48,6 @@ public class GamePanel extends JPanel implements Runnable{
         gameThread.start();
     }
 
-
     public void run() {
         //ATUALIZA O PANEL A 60fps
         long intervalo = 1000000000 / 60;
@@ -87,8 +86,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void paintComponent(Graphics g) {
-        //É CHAMADA SEMPRE QUE O MÉT.ODO REPAINT É CHAMADO
-
+        //É CHAMADA SEMPRE QUE O MÉTODO REPAINT É CHAMADO
         switch (GameStates.gameState) {
             case SELECAO:
                 selecao.draw(g);
@@ -104,7 +102,6 @@ public class GamePanel extends JPanel implements Runnable{
                 break;
             default:
                 break;
-
         }
     }
 

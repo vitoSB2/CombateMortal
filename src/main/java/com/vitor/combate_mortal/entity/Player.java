@@ -8,7 +8,6 @@ import java.awt.geom.AffineTransform;
 
 import com.vitor.combate_mortal.main.GamePanel;
 import com.vitor.combate_mortal.main.Util;
-import com.vitor.combate_mortal.states.Jogo;
 
 public class Player {
 
